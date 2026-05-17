@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#f6f3ed">
 <title>Dana Truk · Maison</title>
+<!-- v4.1 - Bug fixes: auto-sync hook, plat fallback, PIN security, import validation -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -2614,6 +2615,11 @@ function showLockScreen() {
   document.getElementById('lock-msg').className = 'lock-msg hint';
   document.getElementById('lock-msg').textContent = 'Masukkan PIN untuk membuka';
   document.getElementById('pin-input').value = '';
+  // Hide skip button kalau PIN sudah aktif (keamanan)
+  const hint = document.getElementById('lock-hint');
+  if (hint) {
+    hint.style.display = pinSettings.enabled ? 'none' : 'block';
+  }
   setTimeout(() => document.getElementById('pin-input').focus(), 100);
 }
 
@@ -2720,10 +2726,10 @@ function loadState() {
   if (!state.backupSettings) state.backupSettings = { autoBackup: false, backupReminder: true, lastBackup: null };
 }
 
-function saveState() {
+let saveState = function() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
   catch (e) { console.warn(e); }
-}
+};
 
 function savePinSettings() {
   try { localStorage.setItem(PIN_SETTINGS_KEY, JSON.stringify(pinSettings)); }
@@ -3403,7 +3409,8 @@ function renderTrukSelector() {
   const t = activeTruk();
   if (!t) return;
   document.getElementById('active-truk-emoji').textContent = t.emoji;
-  document.getElementById('active-truk-name').innerHTML = `${t.nama} <span class="plat-text text-dim" style="font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px;">· ${t.plat}</span>`;
+  const platDisplay = t.plat && t.plat !== '-' ? t.plat : '—';
+  document.getElementById('active-truk-name').innerHTML = `${t.nama} <span class="plat-text text-dim" style="font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px;">· ${platDisplay}</span>`;
   renderTrukDropdownMenu();
 }
 
@@ -3791,13 +3798,27 @@ function importData(event) {
   reader.onload = (e) => {
     try {
       const parsed = JSON.parse(e.target.result);
-      if (!parsed.trukList || !parsed.data) throw new Error('Format tidak valid');
-      if (!confirm('Yakin restore? Data saat ini akan ditimpa.')) return;
+      // Validasi struktur minimum
+      if (!parsed.trukList || !Array.isArray(parsed.trukList) || parsed.trukList.length === 0) {
+        throw new Error('File tidak punya data truk');
+      }
+      if (!parsed.data || typeof parsed.data !== 'object') {
+        throw new Error('File tidak punya data setoran/pengeluaran');
+      }
+
+      if (!confirm('Yakin restore? Data saat ini akan ditimpa permanen.')) return;
 
       // Backup PIN settings sebelum overwrite
       const importedPin = parsed.pinSettings;
       delete parsed.pinSettings;
       delete parsed.exportedAt;
+
+      // Pastikan setiap truk punya data lengkap
+      for (const t of parsed.trukList) {
+        if (!parsed.data[t.id]) {
+          parsed.data[t.id] = { settings: { ...DEFAULT_SETTINGS }, setoran: [], pengeluaran: [] };
+        }
+      }
 
       state = parsed;
       saveState();
@@ -3812,7 +3833,9 @@ function importData(event) {
       renderTrukSelector();
       switchView('dashboard');
       showToast('Restore berhasil');
-    } catch { showToast('File tidak valid'); }
+    } catch (err) {
+      showToast('File tidak valid: ' + (err.message || 'format salah'));
+    }
   };
   reader.readAsText(file);
   event.target.value = '';
@@ -3921,9 +3944,9 @@ async function setupSync() {
     return;
   }
 
-  if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
+  if (token.length < 20) {
     msg.style.color = 'var(--terracotta)';
-    msg.textContent = 'Format token salah. Mulai dengan ghp_ atau github_pat_';
+    msg.textContent = 'Token terlalu pendek, periksa kembali';
     return;
   }
 
