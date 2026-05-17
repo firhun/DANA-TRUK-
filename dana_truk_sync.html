@@ -1,0 +1,4132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#f6f3ed">
+<title>Dana Truk · Maison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #f6f3ed;
+    --bg-warm: #f1ede4;
+    --surface: #fbf9f4;
+    --surface-2: #ede8dc;
+    --surface-3: #e3dcc9;
+    --ink: #1c1814;
+    --ink-2: #3d362b;
+    --ink-3: #6d6354;
+    --ink-mute: #9c9080;
+    --gold: #b8956a;
+    --gold-soft: #d4b896;
+    --gold-pale: #ebe0cc;
+    --bronze: #8b6f47;
+    --champagne: #e8dcc4;
+    --sage: #8a9a7f;
+    --sage-soft: #d8dfd2;
+    --sage-pale: #e8ece4;
+    --terracotta: #b8826b;
+    --terracotta-soft: #e8d3c7;
+    --dusty-blue: #7a8b95;
+    --dusty-blue-soft: #d5dde2;
+    --plum: #7a5d6e;
+    --plum-soft: #ddd0d7;
+    --line: #e0d8c7;
+    --line-2: #c9bfa9;
+    --shadow-xs: 0 1px 2px rgba(28, 24, 20, 0.04);
+    --shadow-sm: 0 2px 8px rgba(28, 24, 20, 0.05);
+    --shadow: 0 8px 24px rgba(28, 24, 20, 0.07);
+    --shadow-lg: 0 20px 50px rgba(28, 24, 20, 0.12);
+    --radius-sm: 6px;
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { overflow-x: hidden; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    min-height: 100vh;
+    font-size: 14px;
+    font-feature-settings: 'cv11', 'ss01', 'ss03';
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(ellipse at top, rgba(212, 184, 150, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(122, 139, 149, 0.05) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(28, 24, 20, 0.005) 0px, transparent 1px, transparent 3px),
+      repeating-linear-gradient(90deg, rgba(28, 24, 20, 0.005) 0px, transparent 1px, transparent 3px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ============ LOCK SCREEN ============ */
+  .lock-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, var(--bg) 0%, var(--bg-warm) 100%);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .lock-screen.hidden { display: none; }
+
+  .lock-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 48px 40px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+  }
+
+  .lock-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 0 0 100px 100px;
+  }
+
+  .lock-logo {
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, var(--ink), var(--ink-2));
+    color: var(--gold-soft);
+    border-radius: 50%;
+    margin: 0 auto 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-style: italic;
+    position: relative;
+  }
+
+  .lock-logo::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid var(--gold-soft);
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+
+  .lock-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  .lock-title em { font-style: italic; color: var(--gold); }
+
+  .lock-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-mute);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .pin-input {
+    width: 100%;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    letter-spacing: 8px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    margin-bottom: 16px;
+  }
+
+  .pin-input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px var(--gold-pale);
+  }
+
+  .lock-msg {
+    font-size: 12px;
+    margin-bottom: 16px;
+    min-height: 18px;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+  }
+
+  .lock-msg.error { color: var(--terracotta); }
+  .lock-msg.success { color: var(--sage); }
+  .lock-msg.hint { color: var(--ink-3); }
+
+  .lock-hint {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--ink-3);
+    line-height: 1.6;
+  }
+
+  .lock-hint a {
+    color: var(--gold);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ============ HEADER ============ */
+  header {
+    background: rgba(246, 243, 237, 0.92);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .brand { display: flex; align-items: center; gap: 14px; }
+
+  .logo {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--ink), var(--ink-2));
+    color: var(--gold-soft);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 22px;
+    font-style: italic;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+  }
+
+  .logo::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 1px solid var(--gold-soft);
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+
+  .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+
+  .brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+  }
+
+  .brand-sub {
+    font-size: 10px;
+    color: var(--ink-mute);
+    margin-top: 3px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .truk-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 7px 16px 7px 7px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.25s ease;
+  }
+
+  .truk-selector:hover {
+    border-color: var(--gold-soft);
+    background: var(--gold-pale);
+  }
+
+  .truk-emoji {
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, var(--gold-pale), var(--champagne));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border: 1px solid var(--line);
+  }
+
+  .lock-btn {
+    width: 38px; height: 38px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-3);
+    transition: all 0.2s;
+    font-size: 16px;
+  }
+
+  .lock-btn:hover {
+    background: var(--gold-pale);
+    color: var(--bronze);
+    border-color: var(--gold-soft);
+  }
+
+  /* ============ NAV ============ */
+  .nav-desktop {
+    display: flex;
+    gap: 2px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 5px;
+    border-radius: 100px;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--ink-3);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 0.3px;
+  }
+
+  .nav-btn:hover { color: var(--ink); }
+
+  .nav-btn.active {
+    background: var(--ink);
+    color: var(--gold-pale);
+    box-shadow: 0 2px 8px rgba(28, 24, 20, 0.2);
+  }
+
+  /* ============ MAIN ============ */
+  main {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 40px 32px;
+    padding-bottom: 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .view { display: none; }
+  .view.active { display: block; animation: fadeIn 0.4s ease; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============ PAGE HEADER ============ */
+  .page-header {
+    margin-bottom: 36px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .page-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-mute);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .page-eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 400;
+    letter-spacing: -1px;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .page-title em {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .page-sub {
+    color: var(--ink-3);
+    font-size: 17px;
+    margin-top: 10px;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .page-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--bg-warm) 100%);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 48px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(212, 184, 150, 0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 24px; right: 24px;
+    width: 60px; height: 60px;
+    border: 1px solid var(--gold-soft);
+    border-radius: 50%;
+    opacity: 0.4;
+  }
+
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 16px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-eyebrow::before { content: '◆'; color: var(--gold); }
+
+  .hero-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 88px;
+    font-weight: 400;
+    letter-spacing: -3px;
+    line-height: 1;
+    position: relative;
+    color: var(--ink);
+  }
+
+  .hero-value .currency {
+    font-size: 0.55em;
+    font-weight: 300;
+    color: var(--ink-3);
+    margin-right: 8px;
+    vertical-align: 0.2em;
+  }
+
+  .hero-value.negative { color: #a14040; }
+
+  .hero-divider {
+    margin: 32px 0 24px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--line), transparent);
+    position: relative;
+  }
+
+  .hero-divider::before {
+    content: '';
+    position: absolute;
+    left: 0; top: -2px;
+    width: 40px; height: 4px;
+    background: var(--gold);
+    border-radius: 100px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    position: relative;
+  }
+
+  .hero-mini-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-mute);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .hero-mini-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.5px;
+  }
+
+  /* ============ STATUS ============ */
+  .status {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 26px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .status::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--gold);
+  }
+
+  .status.cukup::before { background: var(--sage); }
+  .status.surplus::before { background: var(--dusty-blue); }
+  .status.defisit::before { background: var(--terracotta); }
+
+  .status-ornament {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--gold-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--bronze);
+    flex-shrink: 0;
+    border: 1px solid var(--gold-soft);
+  }
+
+  .status.cukup .status-ornament { background: var(--sage-pale); color: var(--sage); border-color: var(--sage-soft); }
+  .status.surplus .status-ornament { background: var(--dusty-blue-soft); color: var(--dusty-blue); border-color: var(--dusty-blue); }
+  .status.defisit .status-ornament { background: var(--terracotta-soft); color: var(--terracotta); border-color: var(--terracotta); }
+
+  .status-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 20px;
+    margin-bottom: 2px;
+    letter-spacing: -0.2px;
+  }
+
+  .status-desc {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.55;
+  }
+
+  /* ============ ALERTS ============ */
+  .alert {
+    background: linear-gradient(135deg, var(--gold-pale), var(--champagne));
+    border: 1px solid var(--gold-soft);
+    border-radius: var(--radius);
+    padding: 18px 24px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .alert.warning {
+    background: linear-gradient(135deg, var(--terracotta-soft), #f5d4c2);
+    border-color: var(--terracotta);
+  }
+
+  .alert-icon {
+    width: 40px; height: 40px;
+    background: var(--surface);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-xs);
+  }
+
+  .alert-content { flex: 1; }
+
+  .alert-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 2px;
+  }
+
+  .alert-desc {
+    font-size: 12px;
+    color: var(--ink-2);
+  }
+
+  /* ============ STATS GRID ============ */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 60px; height: 60px;
+    background: radial-gradient(circle at top right, var(--gold-pale), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold-soft);
+    box-shadow: var(--shadow);
+  }
+
+  .stat-card:hover::after { opacity: 1; }
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-mute);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .stat-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.8px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-sub {
+    font-size: 11px;
+    color: var(--ink-3);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* ============ TWO COL ============ */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ============ CARD ============ */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: border-color 0.3s;
+  }
+
+  .card:hover { border-color: var(--line-2); }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+
+  .card-header::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -1px;
+    width: 32px; height: 1px;
+    background: var(--gold);
+  }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+  }
+
+  .card-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-mute);
+    margin-top: 4px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ============ ALOKASI ============ */
+  .alokasi-item {
+    margin-bottom: 22px;
+    padding-bottom: 22px;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .alokasi-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .alokasi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+  }
+
+  .alokasi-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .alokasi-pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-mute);
+    font-weight: 400;
+    letter-spacing: 1px;
+  }
+
+  .alokasi-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .alokasi-bar {
+    height: 4px;
+    background: var(--surface-3);
+    border-radius: 100px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .alokasi-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .alokasi-detail {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-mute);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.5px;
+  }
+
+  .quick-actions { display: flex; flex-direction: column; gap: 10px; }
+
+  /* ============ BUTTONS ============ */
+  .btn {
+    background: var(--ink);
+    color: var(--gold-pale);
+    border: none;
+    padding: 13px 22px;
+    border-radius: 100px;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); background: var(--ink-2); }
+  .btn:active { transform: translateY(-1px); }
+
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+
+  .btn-secondary:hover { background: var(--surface-2); border-color: var(--gold-soft); }
+
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold), var(--bronze));
+    color: white;
+  }
+
+  .btn-gold:hover { background: linear-gradient(135deg, var(--bronze), var(--gold)); }
+
+  .btn-danger {
+    background: var(--surface);
+    color: var(--terracotta);
+    border: 1px solid var(--terracotta-soft);
+  }
+
+  .btn-danger:hover { background: var(--terracotta); color: white; border-color: var(--terracotta); }
+
+  .btn-sm { padding: 7px 14px; font-size: 10px; letter-spacing: 1px; }
+
+  /* ============ CHARTS ============ */
+  .chart-container { position: relative; height: 280px; margin-top: 8px; }
+
+  /* ============ TABLE ============ */
+  .table-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .table-header {
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .table-scroll { overflow-x: auto; }
+
+  table { width: 100%; border-collapse: collapse; }
+
+  thead { background: var(--bg-warm); }
+
+  th {
+    padding: 14px 24px;
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-mute);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--line);
+  }
+
+  td {
+    padding: 16px 24px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    vertical-align: middle;
+  }
+
+  tbody tr { transition: background 0.2s; }
+  tbody tr:hover { background: var(--bg-warm); }
+
+  .empty-state { padding: 80px 24px; text-align: center; }
+
+  .empty-ornament {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-style: italic;
+    color: var(--gold-soft);
+    margin-bottom: 12px;
+    line-height: 1;
+  }
+
+  .empty-text {
+    color: var(--ink-mute);
+    font-size: 17px;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* ============ BADGES ============ */
+  .badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+  }
+
+  .badge-rutin { background: var(--dusty-blue-soft); color: var(--dusty-blue); border-color: var(--dusty-blue); }
+  .badge-darurat { background: var(--terracotta-soft); color: var(--terracotta); border-color: var(--terracotta); }
+  .badge-peremajaan { background: var(--sage-pale); color: var(--sage); border-color: var(--sage-soft); }
+  .badge-surplus { background: var(--sage-pale); color: var(--sage); border-color: var(--sage-soft); }
+  .badge-defisit { background: var(--terracotta-soft); color: var(--terracotta); border-color: var(--terracotta); }
+  .badge-kosong { background: var(--surface-2); color: var(--ink-mute); border-color: var(--line); }
+
+  /* ============ FORMS ============ */
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-3);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  input, select, textarea {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 14px;
+    transition: all 0.25s;
+    width: 100%;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px var(--gold-pale);
+  }
+
+  textarea { resize: vertical; min-height: 80px; font-family: inherit; }
+
+  /* ============ MODAL ============ */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 24, 20, 0.5);
+    backdrop-filter: blur(12px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+
+  .modal-overlay.show { display: flex; animation: fadeIn 0.25s; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 580px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+  }
+
+  .modal::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 60px; height: 3px;
+    background: var(--gold);
+    border-radius: 0 0 100px 100px;
+  }
+
+  .modal-header {
+    padding: 32px 32px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .modal-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--gold);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+
+  .modal-close {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--ink-3);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-close:hover {
+    background: var(--terracotta-soft);
+    color: var(--terracotta);
+    border-color: var(--terracotta);
+  }
+
+  .modal-body { padding: 24px 32px; }
+
+  .modal-footer {
+    padding: 20px 32px 28px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ============ SETTINGS ============ */
+  .setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    gap: 16px;
+  }
+
+  .setting-row:first-child { padding-top: 8px; }
+  .setting-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .setting-info { flex: 1; min-width: 0; }
+
+  .setting-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 17px;
+    margin-bottom: 2px;
+  }
+
+  .setting-desc {
+    font-size: 12px;
+    color: var(--ink-3);
+    font-style: italic;
+  }
+
+  .setting-input { width: 150px; flex-shrink: 0; }
+
+  /* ============ TOGGLE ============ */
+  .toggle {
+    position: relative;
+    width: 52px; height: 28px;
+    background: var(--surface-3);
+    border: 1px solid var(--line-2);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+
+  .toggle.on {
+    background: linear-gradient(135deg, var(--gold), var(--bronze));
+    border-color: var(--bronze);
+  }
+
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 22px; height: 22px;
+    background: white;
+    border-radius: 50%;
+    transition: left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--shadow-xs);
+  }
+
+  .toggle.on::after { left: 26px; }
+
+  /* ============ TRUK CARDS ============ */
+  .truk-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .truk-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .truk-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: transparent;
+    transition: background 0.3s;
+  }
+
+  .truk-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold-soft);
+    box-shadow: var(--shadow);
+  }
+
+  .truk-card.active {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--gold-pale) 100%);
+    border-color: var(--gold);
+  }
+
+  .truk-card.active::before {
+    background: linear-gradient(90deg, var(--gold), var(--bronze));
+  }
+
+  .truk-card-emoji {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-pale), var(--champagne));
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin-bottom: 14px;
+  }
+
+  .truk-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 22px;
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
+  }
+
+  .truk-card-plat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 1px;
+  }
+
+  .truk-card-stats {
+    display: flex;
+    gap: 20px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line);
+    font-size: 11px;
+    color: var(--ink-3);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  .truk-card-actions {
+    position: absolute;
+    top: 16px; right: 16px;
+    display: flex;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .truk-card:hover .truk-card-actions { opacity: 1; }
+
+  .truk-card-active-badge {
+    position: absolute;
+    top: 20px; right: 20px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 4px var(--gold-pale);
+  }
+
+  /* ============ PHOTO ============ */
+  .photo-upload {
+    border: 1.5px dashed var(--line-2);
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+    background: var(--bg-warm);
+  }
+
+  .photo-upload:hover {
+    border-color: var(--gold);
+    background: var(--gold-pale);
+  }
+
+  .photo-upload-icon {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .photo-upload-text {
+    font-size: 15px;
+    color: var(--ink-3);
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .photo-preview {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+  }
+
+  .photo-preview img {
+    width: 100%;
+    max-height: 280px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .photo-remove {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: rgba(28, 24, 20, 0.85);
+    color: white;
+    border: none;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .photo-thumb {
+    width: 36px; height: 36px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    transition: transform 0.2s;
+  }
+
+  .photo-thumb:hover { transform: scale(1.1); }
+
+  /* ============ TOAST ============ */
+  .toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translate(-50%, 200%);
+    background: var(--ink);
+    color: var(--gold-pale);
+    padding: 14px 24px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    z-index: 2000;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid var(--gold-soft);
+  }
+
+  .toast.show { transform: translate(-50%, 0); }
+
+  /* ============ BOTTOM NAV ============ */
+  .nav-mobile {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 6px;
+    box-shadow: var(--shadow-lg);
+    z-index: 90;
+    justify-content: space-around;
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-mobile .nav-btn {
+    flex: 1;
+    flex-direction: column;
+    gap: 3px;
+    padding: 9px 4px;
+    font-size: 9px;
+    border-radius: 100px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ============ TRUK DROPDOWN ============ */
+  .truk-dropdown { position: relative; }
+
+  .truk-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 8px;
+    box-shadow: var(--shadow-lg);
+    min-width: 260px;
+    display: none;
+    z-index: 200;
+  }
+
+  .truk-dropdown.open .truk-dropdown-menu { display: block; animation: fadeIn 0.2s; }
+
+  .truk-option {
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background 0.2s;
+  }
+
+  .truk-option:hover { background: var(--bg-warm); }
+  .truk-option.active { background: var(--gold-pale); }
+
+  .truk-option-divider {
+    height: 1px;
+    background: var(--line);
+    margin: 8px 0;
+  }
+
+  /* ============ LIGHTBOX ============ */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 24, 20, 0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    padding: 20px;
+  }
+
+  .lightbox.show { display: flex; }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: var(--radius);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 24px; right: 24px;
+    background: rgba(212, 184, 150, 0.2);
+    border: 1px solid var(--gold-soft);
+    color: white;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  /* ============ SYNC INDICATOR ============ */
+  .sync-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 11px;
+    color: var(--ink-3);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  .sync-indicator:hover {
+    background: var(--gold-pale);
+    border-color: var(--gold-soft);
+  }
+
+  .sync-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ink-mute);
+  }
+
+  .sync-dot.connected { background: var(--sage); box-shadow: 0 0 0 3px var(--sage-pale); }
+  .sync-dot.syncing { background: var(--gold); animation: pulse 1.2s infinite; }
+  .sync-dot.error { background: var(--terracotta); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+  }
+
+  .sync-text-mobile { display: none; }
+
+  @media (max-width: 768px) {
+    .sync-text { display: none; }
+    .sync-indicator { padding: 6px 8px; }
+  }
+
+  /* Setup wizard */
+  .wizard-step {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 12px;
+    position: relative;
+    padding-left: 64px;
+  }
+
+  .wizard-step-num {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .wizard-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 17px;
+    margin-bottom: 4px;
+  }
+
+  .wizard-desc {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.6;
+  }
+
+  .wizard-desc a {
+    color: var(--gold);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+
+  .wizard-desc code {
+    background: var(--surface);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    border: 1px solid var(--line);
+  }
+
+  /* ============ PRINT PREVIEW ============ */
+  .print-controls {
+    background: var(--bg-warm);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .print-controls label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: none;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: normal;
+    color: var(--ink);
+  }
+
+  /* ============ MOBILE ============ */
+  @media (max-width: 768px) {
+    .nav-desktop { display: none; }
+    .nav-mobile { display: flex; }
+    .header-inner { padding: 16px 20px; }
+    main { padding: 24px 20px; padding-bottom: 110px; }
+    .brand-sub { display: none; }
+    .page-header { margin-bottom: 24px; padding-bottom: 18px; }
+    .page-title { font-size: 42px; }
+    .hero { padding: 28px; }
+    .hero-value { font-size: 56px; letter-spacing: -1.5px; }
+    .hero-grid { gap: 16px; }
+    .hero-mini-value { font-size: 18px; }
+    .card { padding: 22px; }
+    .card-header { margin-bottom: 18px; padding-bottom: 14px; }
+    .card-title { font-size: 20px; }
+    .stat-card { padding: 20px; }
+    .stat-value { font-size: 26px; }
+    .modal { max-height: 95vh; }
+    .modal-header { padding: 24px 24px 16px; }
+    .modal-body { padding: 20px 24px; }
+    .modal-footer { padding: 16px 24px 24px; }
+    th, td { padding: 12px 16px; font-size: 12px; }
+    .table-header { padding: 16px 20px; }
+    .truk-selector .plat-text { display: none; }
+    .truk-selector { padding: 5px 12px 5px 5px; }
+    .truk-selector .truk-emoji { width: 24px; height: 24px; font-size: 12px; }
+    .page-actions { width: 100%; }
+    .page-actions .btn { flex: 1; }
+    .lock-card { padding: 36px 28px; }
+    .lock-title { font-size: 26px; }
+  }
+
+  /* ============ PRINT STYLES ============ */
+  @media print {
+    @page {
+      size: A4;
+      margin: 1.5cm 1.2cm;
+    }
+
+    body {
+      background: white !important;
+      color: black !important;
+      font-size: 11pt;
+    }
+
+    body::before { display: none !important; }
+
+    header, .nav-mobile, .toast, .lightbox, .modal-overlay, .lock-screen,
+    .page-actions, .stat-card, #status-banner, #reminder-banner,
+    .truk-card-actions, .row-actions, .btn, .quick-actions,
+    .alokasi-bar, .photo-upload, .photo-remove, .print-controls,
+    .lock-btn, .truk-selector { display: none !important; }
+
+    main { padding: 0 !important; max-width: 100% !important; }
+
+    .view { display: block !important; }
+    .view:not(.print-active) { display: none !important; }
+
+    .print-header {
+      display: block !important;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #1c1814;
+    }
+
+    .print-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28pt;
+      margin-bottom: 4px;
+      letter-spacing: -0.5px;
+    }
+
+    .print-title em { font-style: italic; color: #8b6f47; }
+
+    .print-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9pt;
+      color: #6d6354;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .page-header { border: none !important; padding: 0 !important; margin-bottom: 16px !important; }
+    .page-title { font-size: 22pt !important; }
+    .page-eyebrow { font-size: 8pt !important; }
+    .page-sub { font-size: 11pt !important; }
+
+    .card, .table-card, .hero {
+      box-shadow: none !important;
+      background: white !important;
+      border: 1px solid #c9bfa9 !important;
+      page-break-inside: avoid;
+      padding: 16px !important;
+      margin-bottom: 12px !important;
+    }
+
+    .hero::before, .hero::after, .card-header::after { display: none !important; }
+
+    .hero-value { font-size: 36pt !important; }
+    .card-title { font-size: 14pt !important; }
+    .stat-label { font-size: 8pt !important; }
+    .stat-value { font-size: 16pt !important; }
+
+    .chart-container { height: 200px !important; page-break-inside: avoid; }
+
+    table { font-size: 10pt; }
+    th, td { padding: 8px 12px !important; }
+    thead { background: #f1ede4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+    .badge {
+      background: white !important;
+      border: 1px solid #6d6354 !important;
+      color: #1c1814 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .photo-thumb {
+      width: 80px !important;
+      height: 80px !important;
+    }
+
+    .print-footer {
+      display: block !important;
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #c9bfa9;
+      font-size: 9pt;
+      color: #6d6354;
+      text-align: center;
+      font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .alokasi-fill {
+      background: #8b6f47 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .two-col { grid-template-columns: 1fr !important; }
+  }
+
+  .print-header, .print-footer { display: none; }
+
+  /* Utils */
+  .num { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum'; }
+  .text-dim { color: var(--ink-3); }
+  .text-mute { color: var(--ink-mute); }
+  .right { text-align: right; }
+  .row-actions { display: flex; gap: 6px; justify-content: flex-end; }
+  .flex { display: flex; gap: 10px; align-items: center; }
+  .gap-12 { gap: 12px; }
+  .mt-16 { margin-top: 18px; }
+  .serif { font-family: 'Cormorant Garamond', serif; }
+</style>
+</head>
+<body>
+
+<!-- ============ LOCK SCREEN ============ -->
+<div class="lock-screen" id="lock-screen">
+  <div class="lock-card">
+    <div class="lock-logo">D</div>
+    <div class="lock-title" id="lock-title">Selamat datang<em>.</em></div>
+    <div class="lock-sub" id="lock-sub">Maison · Dana Truk</div>
+    <input type="password" class="pin-input" id="pin-input" placeholder="••••" maxlength="20" autocomplete="off" inputmode="numeric">
+    <div class="lock-msg hint" id="lock-msg">Masukkan PIN untuk membuka</div>
+    <button class="btn btn-gold" style="width: 100%;" id="lock-submit" onclick="handleLockSubmit()">Buka</button>
+    <div class="lock-hint" id="lock-hint">
+      Belum punya PIN? <a onclick="skipPin()">Lewati untuk sekarang</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">D</div>
+      <div class="brand-text">
+        <div class="brand-name">Dana Truk</div>
+        <div class="brand-sub">Maison</div>
+      </div>
+    </div>
+
+    <nav class="nav-desktop">
+      <button class="nav-btn active" data-view="dashboard">Dashboard</button>
+      <button class="nav-btn" data-view="setoran">Setoran</button>
+      <button class="nav-btn" data-view="pengeluaran">Pengeluaran</button>
+      <button class="nav-btn" data-view="rekap">Rekap</button>
+      <button class="nav-btn" data-view="truk">Armada</button>
+      <button class="nav-btn" data-view="settings">Pengaturan</button>
+    </nav>
+
+    <div class="header-right">
+      <div class="sync-indicator" id="sync-indicator" onclick="switchView('settings'); setTimeout(() => document.getElementById('sync-card').scrollIntoView({behavior: 'smooth', block: 'center'}), 100);">
+        <div class="sync-dot" id="sync-dot"></div>
+        <span class="sync-text" id="sync-text">Belum sync</span>
+      </div>
+      <div class="truk-dropdown" id="truk-dropdown">
+        <div class="truk-selector" onclick="toggleTrukDropdown()">
+          <div class="truk-emoji" id="active-truk-emoji">🚚</div>
+          <span id="active-truk-name">Pilih truk</span>
+          <span class="text-mute">▾</span>
+        </div>
+        <div class="truk-dropdown-menu" id="truk-dropdown-menu"></div>
+      </div>
+      <button class="lock-btn" onclick="lockApp()" title="Kunci aplikasi">🔒</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ============ DASHBOARD ============ -->
+  <section class="view active" id="view-dashboard">
+    <div class="print-header">
+      <div class="print-title">Laporan Dashboard<em>.</em></div>
+      <div class="print-meta" id="print-meta-dashboard"></div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">Beranda</div>
+        <h1 class="page-title">Selamat datang<em>.</em></h1>
+        <p class="page-sub" id="page-greeting">Mari kita lihat kondisi dana hari ini</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-secondary" onclick="printView('dashboard')">🖨 Cetak</button>
+      </div>
+    </div>
+
+    <div id="backup-alert"></div>
+    <div id="reminder-banner"></div>
+
+    <div class="hero">
+      <div class="hero-eyebrow">Saldo Dana Saat Ini</div>
+      <div class="hero-value" id="hero-saldo"><span class="currency">Rp</span>0</div>
+      <div class="hero-divider"></div>
+      <div class="hero-grid">
+        <div>
+          <div class="hero-mini-label">Total Setoran</div>
+          <div class="hero-mini-value num" id="hero-setoran">Rp 0</div>
+        </div>
+        <div>
+          <div class="hero-mini-label">Total Pengeluaran</div>
+          <div class="hero-mini-value num" id="hero-pengeluaran">Rp 0</div>
+        </div>
+        <div>
+          <div class="hero-mini-label">Minggu Berjalan</div>
+          <div class="hero-mini-value num" id="hero-minggu">0</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="status-banner"></div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Setoran / Minggu</div>
+        <div class="stat-value num" id="stat-setoran">Rp 0</div>
+        <div class="stat-sub">Konfigurasi default</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Pengeluaran Rata-rata</div>
+        <div class="stat-value num" id="stat-avg">Rp 0</div>
+        <div class="stat-sub">Per minggu (aktual)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Selisih Mingguan</div>
+        <div class="stat-value num" id="stat-selisih">Rp 0</div>
+        <div class="stat-sub" id="stat-selisih-sub">Surplus / defisit</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Rekomendasi Ideal</div>
+        <div class="stat-value num" id="stat-saran">—</div>
+        <div class="stat-sub">Per minggu</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Trend 6 Bulan Terakhir</div>
+            <div class="card-sub">Setoran versus Pengeluaran</div>
+          </div>
+        </div>
+        <div class="chart-container"><canvas id="chart-trend"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Distribusi Biaya</div>
+            <div class="card-sub">Berdasarkan Kategori</div>
+          </div>
+        </div>
+        <div class="chart-container"><canvas id="chart-kategori"></canvas></div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Alokasi Dana</div>
+            <div class="card-sub">Distribusi saldo per kategori</div>
+          </div>
+        </div>
+        <div id="alokasi-list"></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Aksi Cepat</div>
+            <div class="card-sub">Catat dalam satu klik</div>
+          </div>
+        </div>
+        <div class="quick-actions">
+          <button class="btn" onclick="openSetoranModal()">Catat Setoran</button>
+          <button class="btn btn-secondary" onclick="openPengeluaranModal()">Catat Pengeluaran</button>
+          <button class="btn btn-gold" onclick="switchView('rekap')">Lihat Rekap Bulanan</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="print-footer">Dicetak dari Dana Truk · Maison</div>
+  </section>
+
+  <!-- ============ SETORAN ============ -->
+  <section class="view" id="view-setoran">
+    <div class="print-header">
+      <div class="print-title">Laporan Setoran<em>.</em></div>
+      <div class="print-meta" id="print-meta-setoran"></div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">Catatan Kas</div>
+        <h1 class="page-title">Setoran<em>.</em></h1>
+        <p class="page-sub" id="setoran-summary">Riwayat kas masuk</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-secondary" onclick="printView('setoran')">🖨 Cetak</button>
+        <button class="btn" onclick="openSetoranModal()">Setoran Baru</button>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Minggu</th>
+              <th>Jumlah</th>
+              <th>Catatan</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="setoran-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="print-footer">Dicetak dari Dana Truk · Maison</div>
+  </section>
+
+  <!-- ============ PENGELUARAN ============ -->
+  <section class="view" id="view-pengeluaran">
+    <div class="print-header">
+      <div class="print-title">Laporan Pengeluaran<em>.</em></div>
+      <div class="print-meta" id="print-meta-pengeluaran"></div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">Catatan Biaya</div>
+        <h1 class="page-title">Pengeluaran<em>.</em></h1>
+        <p class="page-sub" id="pengeluaran-summary">Riwayat biaya perawatan</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-secondary" onclick="printView('pengeluaran')">🖨 Cetak</button>
+        <button class="btn" onclick="openPengeluaranModal()">Pengeluaran Baru</button>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Perawatan Rutin</div>
+        <div class="stat-value num" id="sub-rutin">Rp 0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Dana Darurat</div>
+        <div class="stat-value num" id="sub-darurat">Rp 0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Peremajaan</div>
+        <div class="stat-value num" id="sub-peremajaan">Rp 0</div>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>KM</th>
+              <th>Jenis Servis</th>
+              <th>Kategori</th>
+              <th class="right">Biaya</th>
+              <th>Bengkel</th>
+              <th>Foto</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="pengeluaran-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="print-footer">Dicetak dari Dana Truk · Maison</div>
+  </section>
+
+  <!-- ============ REKAP ============ -->
+  <section class="view" id="view-rekap">
+    <div class="print-header">
+      <div class="print-title">Laporan Rekap Bulanan<em>.</em></div>
+      <div class="print-meta" id="print-meta-rekap"></div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">Evaluasi</div>
+        <h1 class="page-title">Rekap<em>.</em></h1>
+        <p class="page-sub">Evaluasi cashflow per bulan</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-secondary" onclick="printView('rekap')">🖨 Cetak Laporan</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 20px;">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Saldo Akumulatif</div>
+          <div class="card-sub">Perkembangan dana bulanan</div>
+        </div>
+      </div>
+      <div class="chart-container"><canvas id="chart-akumulatif"></canvas></div>
+    </div>
+
+    <div class="table-card">
+      <div class="table-header">
+        <div>
+          <div style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 20px;">Detail Per Bulan</div>
+          <div class="text-dim" style="font-size: 11px; margin-top: 4px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase;">Surplus / defisit otomatis</div>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Bulan</th>
+              <th class="right">Setoran</th>
+              <th class="right">Pengeluaran</th>
+              <th class="right">Selisih</th>
+              <th class="right">Saldo</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="rekap-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="print-footer">Dicetak dari Dana Truk · Maison</div>
+  </section>
+
+  <!-- ============ TRUK ============ -->
+  <section class="view" id="view-truk">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">Kelola Armada</div>
+        <h1 class="page-title">Armada<em>.</em></h1>
+        <p class="page-sub">Kelola kendaraan distribusi</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn" onclick="openTrukModal()">Tambah Armada</button>
+      </div>
+    </div>
+
+    <div class="truk-list" id="truk-list"></div>
+  </section>
+
+  <!-- ============ SETTINGS ============ -->
+  <section class="view" id="view-settings">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">Konfigurasi</div>
+        <h1 class="page-title">Pengaturan<em>.</em></h1>
+        <p class="page-sub">Konfigurasi, keamanan & data</p>
+      </div>
+    </div>
+
+    <!-- CLOUD SYNC -->
+    <div class="card" style="margin-bottom: 20px;" id="sync-card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">☁️ Cloud Sync</div>
+          <div class="card-sub">Sinkronisasi data HP & PC otomatis</div>
+        </div>
+        <span class="badge" id="sync-status-badge">BELUM AKTIF</span>
+      </div>
+
+      <div id="sync-not-setup">
+        <p style="font-size: 14px; color: var(--ink-2); margin-bottom: 16px; font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic; line-height: 1.7;">
+          Sambungkan ke GitHub Gist untuk sinkronisasi data otomatis antara HP dan PC. Setup hanya sekali — gratis dan aman.
+        </p>
+
+        <div class="wizard-step">
+          <div class="wizard-step-num">1</div>
+          <div class="wizard-title">Buka GitHub & login</div>
+          <div class="wizard-desc">
+            Belum punya akun? <a onclick="window.open('https://github.com/signup', '_blank')">Daftar gratis di sini</a>. Sudah punya? <a onclick="window.open('https://github.com/login', '_blank')">Login di sini</a>.
+          </div>
+        </div>
+
+        <div class="wizard-step">
+          <div class="wizard-step-num">2</div>
+          <div class="wizard-title">Buat Personal Access Token</div>
+          <div class="wizard-desc">
+            <a onclick="window.open('https://github.com/settings/tokens/new?description=Dana%20Truk%20Sync&scopes=gist', '_blank')">Klik di sini untuk buat token</a> · pilih expiration <code>No expiration</code> · scope <code>gist</code> sudah dicentang otomatis · klik <strong>Generate token</strong> di bawah halaman.
+          </div>
+        </div>
+
+        <div class="wizard-step">
+          <div class="wizard-step-num">3</div>
+          <div class="wizard-title">Copy token & paste di sini</div>
+          <div class="wizard-desc">
+            Token akan tampil sekali (mulai dengan <code>ghp_</code> atau <code>github_pat_</code>). Copy semua → paste di kolom bawah.
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 16px;">
+          <label>GitHub Token</label>
+          <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+        </div>
+
+        <div class="mt-16 flex gap-12">
+          <button class="btn" onclick="setupSync()">Sambungkan</button>
+          <span id="sync-setup-msg" style="font-size: 12px; font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic;"></span>
+        </div>
+      </div>
+
+      <div id="sync-active" style="display: none;">
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Status Koneksi</div>
+            <div class="setting-desc" id="sync-info">Terhubung ke GitHub Gist</div>
+          </div>
+          <span class="badge badge-surplus">✓ AKTIF</span>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Auto-sync</div>
+            <div class="setting-desc">Otomatis upload setiap data berubah</div>
+          </div>
+          <div class="toggle" id="toggle-autosync" onclick="toggleAutoSync()"></div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Sync Terakhir</div>
+            <div class="setting-desc" id="last-sync-info">Belum pernah</div>
+          </div>
+        </div>
+
+        <div class="mt-16 flex gap-12" style="flex-wrap: wrap;">
+          <button class="btn" onclick="syncNow()">⬆️ Upload Sekarang</button>
+          <button class="btn btn-secondary" onclick="downloadFromCloud()">⬇️ Download dari Cloud</button>
+          <button class="btn btn-danger" onclick="disconnectSync()">Putus Koneksi</button>
+        </div>
+
+        <div style="margin-top: 22px; padding: 16px 20px; background: var(--gold-pale); border: 1px solid var(--gold-soft); border-radius: var(--radius); font-size: 13px; color: var(--ink-2); line-height: 1.65;">
+          <strong style="color: var(--bronze); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">💡 Cara Pakai di HP</strong>
+          <div style="margin-top: 8px; font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic;">
+            Buka aplikasi di HP → masuk ke <em>Pengaturan</em> → Cloud Sync → masukkan token GitHub yang sama → klik <em>Download dari Cloud</em>. Selesai!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KEAMANAN -->
+    <div class="card" style="margin-bottom: 20px;">
+      <div class="card-header">
+        <div>
+          <div class="card-title">🔒 Keamanan</div>
+          <div class="card-sub">PIN Lock untuk privasi</div>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Aktifkan PIN Lock</div>
+          <div class="setting-desc">Wajib masukkan PIN setiap buka aplikasi</div>
+        </div>
+        <div class="toggle" id="toggle-pin" onclick="togglePinLock()"></div>
+      </div>
+
+      <div class="setting-row" id="pin-change-row">
+        <div class="setting-info">
+          <div class="setting-name">Ganti PIN</div>
+          <div class="setting-desc">Minimal 4 digit, maksimal 20 karakter</div>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="openPinModal()">Ubah PIN</button>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Auto-lock setelah idle</div>
+          <div class="setting-desc">Kunci otomatis jika tidak ada aktivitas</div>
+        </div>
+        <select class="setting-input" id="set-autolock" onchange="saveAutolock()">
+          <option value="0">Mati</option>
+          <option value="5">5 menit</option>
+          <option value="15">15 menit</option>
+          <option value="30">30 menit</option>
+          <option value="60">1 jam</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- BACKUP -->
+    <div class="card" style="margin-bottom: 20px;">
+      <div class="card-header">
+        <div>
+          <div class="card-title">☁️ Keamanan Data</div>
+          <div class="card-sub">Backup otomatis & manual</div>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Auto-backup Mingguan</div>
+          <div class="setting-desc">Otomatis download file backup tiap minggu</div>
+        </div>
+        <div class="toggle" id="toggle-autobackup" onclick="toggleAutoBackup()"></div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Pengingat Backup</div>
+          <div class="setting-desc">Banner muncul jika 7+ hari tidak backup</div>
+        </div>
+        <div class="toggle" id="toggle-backup-reminder" onclick="toggleBackupReminder()"></div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Backup Terakhir</div>
+          <div class="setting-desc" id="last-backup-info">Belum pernah backup</div>
+        </div>
+      </div>
+
+      <div class="mt-16 flex gap-12" style="flex-wrap: wrap;">
+        <button class="btn" onclick="exportData()">📥 Backup Sekarang</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">📤 Restore</button>
+        <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
+      </div>
+
+      <div style="margin-top: 22px; padding: 16px 20px; background: var(--sage-pale); border: 1px solid var(--sage-soft); border-radius: var(--radius); font-size: 13px; color: var(--ink-2); line-height: 1.65;">
+        <strong style="color: var(--sage); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">💡 Tips Aman</strong>
+        <div style="margin-top: 8px; font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic;">
+          Simpan file backup di beberapa tempat: Google Drive, email pribadi, atau WhatsApp ke diri sendiri.
+          Setiap selesai catat banyak data, klik <em>Backup Sekarang</em> untuk amankan.
+        </div>
+      </div>
+    </div>
+
+    <!-- PARAMETER -->
+    <div class="card" style="margin-bottom: 20px;">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Parameter Dana</div>
+          <div class="card-sub">Atur sesuai armada aktif</div>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Setoran per Minggu</div>
+          <div class="setting-desc">Default jumlah setoran rutin</div>
+        </div>
+        <input type="number" class="setting-input" id="set-setoran" value="100000">
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Alokasi Perawatan Rutin</div>
+          <div class="setting-desc">Oli, filter, ban, servis berkala (%)</div>
+        </div>
+        <input type="number" class="setting-input" id="set-alok-rutin" value="60" min="0" max="100">
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Alokasi Dana Darurat</div>
+          <div class="setting-desc">Kerusakan mendadak (%)</div>
+        </div>
+        <input type="number" class="setting-input" id="set-alok-darurat" value="30" min="0" max="100">
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Alokasi Peremajaan</div>
+          <div class="setting-desc">Tabungan jangka panjang (%)</div>
+        </div>
+        <input type="number" class="setting-input" id="set-alok-peremajaan" value="10" min="0" max="100">
+      </div>
+
+      <div class="mt-16 flex gap-12">
+        <button class="btn" onclick="saveSettings()">Simpan Perubahan</button>
+        <span id="alok-warning" style="color: var(--terracotta); font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px;"></span>
+      </div>
+    </div>
+
+    <!-- REMINDER -->
+    <div class="card" style="margin-bottom: 20px;">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Pengingat Mingguan</div>
+          <div class="card-sub">Notifikasi untuk setor rutin</div>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Aktifkan Pengingat</div>
+          <div class="setting-desc">Tampilkan banner jika waktunya setor</div>
+        </div>
+        <div class="toggle" id="toggle-reminder" onclick="toggleReminder()"></div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Hari Setor</div>
+          <div class="setting-desc">Pilih hari rutin untuk setor</div>
+        </div>
+        <select class="setting-input" id="set-reminder-hari" onchange="saveReminderHari()">
+          <option value="1">Senin</option>
+          <option value="2">Selasa</option>
+          <option value="3">Rabu</option>
+          <option value="4">Kamis</option>
+          <option value="5">Jumat</option>
+          <option value="6">Sabtu</option>
+          <option value="0">Minggu</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- RESET -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">⚠️ Zona Berbahaya</div>
+          <div class="card-sub">Tindakan permanen</div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+        <div>
+          <div style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 17px;">Reset Semua Data</div>
+          <div style="font-size: 12px; color: var(--ink-3); font-style: italic; margin-top: 2px;">Hapus semua data secara permanen — tidak bisa dibatalkan</div>
+        </div>
+        <button class="btn btn-danger" onclick="resetData()">Reset Semua</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- BOTTOM NAV MOBILE -->
+<nav class="nav-mobile">
+  <button class="nav-btn active" data-view="dashboard">Beranda</button>
+  <button class="nav-btn" data-view="setoran">Setor</button>
+  <button class="nav-btn" data-view="pengeluaran">Biaya</button>
+  <button class="nav-btn" data-view="rekap">Rekap</button>
+  <button class="nav-btn" data-view="settings">Lain</button>
+</nav>
+
+<!-- ============ MODAL: PIN ============ -->
+<div class="modal-overlay" id="modal-pin">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow">Keamanan</div>
+        <div class="modal-title" id="modal-pin-title">Atur PIN</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-pin')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group full" id="pin-old-group" style="display: none;">
+          <label>PIN Lama</label>
+          <input type="password" id="pin-old" placeholder="••••" maxlength="20" inputmode="numeric">
+        </div>
+        <div class="form-group full">
+          <label>PIN Baru</label>
+          <input type="password" id="pin-new" placeholder="Minimal 4 digit" maxlength="20" inputmode="numeric">
+        </div>
+        <div class="form-group full">
+          <label>Konfirmasi PIN Baru</label>
+          <input type="password" id="pin-confirm" placeholder="Ulangi PIN baru" maxlength="20" inputmode="numeric">
+        </div>
+      </div>
+      <div id="pin-msg" style="margin-top: 12px; font-size: 12px; min-height: 16px; font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 15px;"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-pin')">Batal</button>
+      <button class="btn" onclick="savePinChange()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: SETORAN ============ -->
+<div class="modal-overlay" id="modal-setoran">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow">Kas Masuk</div>
+        <div class="modal-title" id="modal-setoran-title">Catat Setoran</div>
+        <div class="text-dim" style="font-size: 12px; margin-top: 6px; font-style: italic;" id="modal-setoran-truk">—</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-setoran')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="setoran-id">
+      <div class="form-grid">
+        <div class="form-group"><label>Tanggal</label><input type="date" id="setoran-tanggal"></div>
+        <div class="form-group"><label>Minggu Ke-</label><input type="number" id="setoran-minggu" min="1"></div>
+        <div class="form-group full"><label>Jumlah (Rupiah)</label><input type="number" id="setoran-jumlah" min="0" step="1000"></div>
+        <div class="form-group full"><label>Catatan</label><input type="text" id="setoran-catatan" placeholder="Opsional"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-setoran')">Batal</button>
+      <button class="btn" onclick="saveSetoran()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: PENGELUARAN ============ -->
+<div class="modal-overlay" id="modal-pengeluaran">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow">Biaya Perawatan</div>
+        <div class="modal-title" id="modal-pengeluaran-title">Catat Pengeluaran</div>
+        <div class="text-dim" style="font-size: 12px; margin-top: 6px; font-style: italic;" id="modal-pengeluaran-truk">—</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-pengeluaran')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="pengeluaran-id">
+      <div class="form-grid">
+        <div class="form-group"><label>Tanggal</label><input type="date" id="pengeluaran-tanggal"></div>
+        <div class="form-group"><label>KM Truk</label><input type="number" id="pengeluaran-km" min="0"></div>
+        <div class="form-group full"><label>Jenis Servis / Sparepart</label><input type="text" id="pengeluaran-jenis" placeholder="Misal: Ganti oli mesin + filter"></div>
+        <div class="form-group">
+          <label>Kategori</label>
+          <select id="pengeluaran-kategori">
+            <option value="rutin">Perawatan Rutin</option>
+            <option value="darurat">Dana Darurat</option>
+            <option value="peremajaan">Peremajaan</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Biaya (Rupiah)</label><input type="number" id="pengeluaran-biaya" min="0" step="1000"></div>
+        <div class="form-group full"><label>Bengkel</label><input type="text" id="pengeluaran-bengkel" placeholder="Misal: Bengkel Pak Adi"></div>
+        <div class="form-group full"><label>Catatan</label><textarea id="pengeluaran-catatan" rows="2"></textarea></div>
+        <div class="form-group full">
+          <label>Foto Struk / Nota</label>
+          <input type="file" id="pengeluaran-foto-input" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)">
+          <div id="photo-area">
+            <div class="photo-upload" onclick="document.getElementById('pengeluaran-foto-input').click()">
+              <div class="photo-upload-icon">+</div>
+              <div class="photo-upload-text">Tap untuk pilih foto atau ambil gambar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-pengeluaran')">Batal</button>
+      <button class="btn" onclick="savePengeluaran()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: TRUK ============ -->
+<div class="modal-overlay" id="modal-truk">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow">Kelola Armada</div>
+        <div class="modal-title" id="modal-truk-title">Tambah Armada</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-truk')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="truk-id">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Jenis</label>
+          <select id="truk-emoji">
+            <option value="🚚">🚚 Truk</option>
+            <option value="🛻">🛻 Pickup</option>
+            <option value="🚛">🚛 Truk Besar</option>
+            <option value="🚐">🚐 Van</option>
+            <option value="🏍️">🏍️ Motor</option>
+            <option value="🚗">🚗 Mobil</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Nama</label><input type="text" id="truk-nama" placeholder="Misal: Truk Biru"></div>
+        <div class="form-group"><label>Plat Nomor</label><input type="text" id="truk-plat" placeholder="L 1234 AB"></div>
+        <div class="form-group"><label>Tipe / Model</label><input type="text" id="truk-tipe" placeholder="Mitsubishi Colt Diesel"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-truk')">Batal</button>
+      <button class="btn" onclick="saveTruk()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close">×</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<div class="toast" id="toast">Tersimpan</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const STORAGE_KEY = 'dana_truk_v4';
+const PIN_KEY = 'dana_truk_pin';
+const PIN_SETTINGS_KEY = 'dana_truk_pin_settings';
+const SYNC_KEY = 'dana_truk_sync';
+const GIST_DESC = 'Dana Truk Maison - Backup Data';
+const GIST_FILE = 'dana_truk_data.json';
+
+let state = {
+  trukList: [],
+  activeTrukId: null,
+  reminder: { aktif: true, hari: 5 },
+  backupSettings: { autoBackup: false, backupReminder: true, lastBackup: null },
+  data: {}
+};
+
+let pinSettings = {
+  enabled: false,
+  autolockMinutes: 0
+};
+
+let syncState = {
+  token: null,
+  gistId: null,
+  autoSync: true,
+  lastSync: null,
+  status: 'disconnected' // disconnected | connected | syncing | error
+};
+let syncDebounceTimer = null;
+
+const DEFAULT_SETTINGS = {
+  setoranMingguan: 100000,
+  alokRutin: 60,
+  alokDarurat: 30,
+  alokPeremajaan: 10
+};
+
+const KATEGORI_LABEL = { rutin: 'Perawatan Rutin', darurat: 'Dana Darurat', peremajaan: 'Peremajaan' };
+const KATEGORI_BADGE = { rutin: 'badge-rutin', darurat: 'badge-darurat', peremajaan: 'badge-peremajaan' };
+
+let chartTrend = null, chartKategori = null, chartAkumulatif = null;
+let pendingPhoto = null;
+let autolockTimer = null;
+
+// ============================================================
+// SIMPLE HASH (untuk PIN)
+// ============================================================
+async function hashPin(pin) {
+  const enc = new TextEncoder();
+  const data = enc.encode(pin + 'dana_truk_salt_2026');
+  const hashBuf = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// ============================================================
+// LOCK SCREEN
+// ============================================================
+async function checkLockOnLoad() {
+  try {
+    const storedSettings = localStorage.getItem(PIN_SETTINGS_KEY);
+    if (storedSettings) pinSettings = { ...pinSettings, ...JSON.parse(storedSettings) };
+
+    if (!pinSettings.enabled) {
+      hideLockScreen();
+      return;
+    }
+    showLockScreen();
+  } catch {
+    hideLockScreen();
+  }
+}
+
+function showLockScreen() {
+  document.getElementById('lock-screen').classList.remove('hidden');
+  document.getElementById('lock-msg').className = 'lock-msg hint';
+  document.getElementById('lock-msg').textContent = 'Masukkan PIN untuk membuka';
+  document.getElementById('pin-input').value = '';
+  setTimeout(() => document.getElementById('pin-input').focus(), 100);
+}
+
+function hideLockScreen() {
+  document.getElementById('lock-screen').classList.add('hidden');
+  resetAutolockTimer();
+}
+
+function skipPin() {
+  hideLockScreen();
+}
+
+async function handleLockSubmit() {
+  const input = document.getElementById('pin-input').value.trim();
+  const msgEl = document.getElementById('lock-msg');
+
+  if (!input) {
+    msgEl.className = 'lock-msg error';
+    msgEl.textContent = 'PIN tidak boleh kosong';
+    return;
+  }
+
+  const stored = localStorage.getItem(PIN_KEY);
+  const hashed = await hashPin(input);
+
+  if (hashed === stored) {
+    msgEl.className = 'lock-msg success';
+    msgEl.textContent = '✓ Berhasil';
+    setTimeout(hideLockScreen, 300);
+  } else {
+    msgEl.className = 'lock-msg error';
+    msgEl.textContent = 'PIN salah, coba lagi';
+    document.getElementById('pin-input').value = '';
+    document.getElementById('pin-input').focus();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const pinInput = document.getElementById('pin-input');
+  if (pinInput) {
+    pinInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleLockSubmit();
+    });
+  }
+});
+
+function lockApp() {
+  if (!pinSettings.enabled) {
+    showToast('PIN Lock belum diaktifkan');
+    return;
+  }
+  showLockScreen();
+}
+
+// ============================================================
+// AUTO LOCK
+// ============================================================
+function resetAutolockTimer() {
+  if (autolockTimer) clearTimeout(autolockTimer);
+  if (!pinSettings.enabled || !pinSettings.autolockMinutes) return;
+  autolockTimer = setTimeout(() => {
+    showLockScreen();
+  }, pinSettings.autolockMinutes * 60 * 1000);
+}
+
+['mousemove', 'keypress', 'click', 'touchstart', 'scroll'].forEach(evt => {
+  document.addEventListener(evt, () => {
+    if (!document.getElementById('lock-screen').classList.contains('hidden')) return;
+    resetAutolockTimer();
+  });
+});
+
+// ============================================================
+// STATE LOAD/SAVE
+// ============================================================
+function loadState() {
+  try {
+    let raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      // migration from v3
+      raw = localStorage.getItem('dana_truk_v3') || localStorage.getItem('dana_truk_v2');
+    }
+    if (raw) state = { ...state, ...JSON.parse(raw) };
+  } catch (e) { console.warn(e); }
+
+  if (state.trukList.length === 0) {
+    const id = uid();
+    state.trukList = [{ id, emoji: '🚚', nama: 'Truk Utama', plat: '-', tipe: '-' }];
+    state.activeTrukId = id;
+    state.data[id] = { settings: { ...DEFAULT_SETTINGS }, setoran: [], pengeluaran: [] };
+    saveState();
+  }
+
+  if (!state.activeTrukId || !state.data[state.activeTrukId]) {
+    state.activeTrukId = state.trukList[0].id;
+  }
+
+  for (const t of state.trukList) {
+    if (!state.data[t.id]) {
+      state.data[t.id] = { settings: { ...DEFAULT_SETTINGS }, setoran: [], pengeluaran: [] };
+    }
+  }
+
+  if (!state.backupSettings) state.backupSettings = { autoBackup: false, backupReminder: true, lastBackup: null };
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch (e) { console.warn(e); }
+}
+
+function savePinSettings() {
+  try { localStorage.setItem(PIN_SETTINGS_KEY, JSON.stringify(pinSettings)); }
+  catch (e) { console.warn(e); }
+}
+
+function activeData() { return state.data[state.activeTrukId]; }
+function activeTruk() { return state.trukList.find(t => t.id === state.activeTrukId); }
+
+// ============================================================
+// UTILS
+// ============================================================
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+function todayStr() { return new Date().toISOString().slice(0, 10); }
+
+function formatRp(n) {
+  if (!n && n !== 0) return 'Rp 0';
+  const sign = n < 0 ? '-' : '';
+  return sign + 'Rp ' + Math.abs(Math.round(n)).toLocaleString('id-ID');
+}
+
+function formatRpHero(n) {
+  if (!n && n !== 0) return '<span class="currency">Rp</span>0';
+  const sign = n < 0 ? '-' : '';
+  return sign + '<span class="currency">Rp</span>' + Math.abs(Math.round(n)).toLocaleString('id-ID');
+}
+
+function formatRpCompact(n) {
+  const abs = Math.abs(n);
+  const sign = n < 0 ? '-' : '';
+  if (abs >= 1000000) return sign + 'Rp ' + (abs/1000000).toFixed(1).replace(/\.0$/, '') + 'jt';
+  if (abs >= 1000) return sign + 'Rp ' + Math.round(abs/1000) + 'k';
+  return formatRp(n);
+}
+
+function formatTanggal(s) {
+  if (!s) return '-';
+  return new Date(s).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ============================================================
+// NAV
+// ============================================================
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => switchView(btn.dataset.view));
+});
+
+function switchView(view) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + view));
+  if (view === 'dashboard') renderDashboard();
+  if (view === 'setoran') renderSetoran();
+  if (view === 'pengeluaran') renderPengeluaran();
+  if (view === 'rekap') renderRekap();
+  if (view === 'truk') renderTrukList();
+  if (view === 'settings') renderSettings();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================================
+// CALCULATIONS
+// ============================================================
+function totalSetoran() { return activeData().setoran.reduce((s, x) => s + (Number(x.jumlah) || 0), 0); }
+function totalPengeluaran() { return activeData().pengeluaran.reduce((s, x) => s + (Number(x.biaya) || 0), 0); }
+function totalPengeluaranByKat(kat) {
+  return activeData().pengeluaran.filter(p => p.kategori === kat).reduce((s, x) => s + (Number(x.biaya) || 0), 0);
+}
+function saldo() { return totalSetoran() - totalPengeluaran(); }
+
+function mingguBerjalan() {
+  const setoran = activeData().setoran;
+  if (setoran.length === 0) return 0;
+  const tanggal = setoran.map(s => new Date(s.tanggal)).sort((a, b) => a - b);
+  const diff = Math.floor((new Date() - tanggal[0]) / (7 * 86400000)) + 1;
+  return Math.max(diff, setoran.length);
+}
+
+function pengeluaranAvgPerMinggu() {
+  const m = mingguBerjalan();
+  return m === 0 ? 0 : totalPengeluaran() / m;
+}
+
+function getStatus() {
+  const d = activeData();
+  const m = mingguBerjalan();
+  const setoranM = d.settings.setoranMingguan;
+  const avg = pengeluaranAvgPerMinggu();
+  const selisih = setoranM - avg;
+
+  if (m < 4 || d.pengeluaran.length === 0) {
+    return { key: 'warning', icon: '◐', title: 'Data masih terbatas',
+      desc: 'Butuh minimal empat minggu data dan beberapa pengeluaran untuk analisis yang akurat.' };
+  }
+  if (selisih >= setoranM * 0.2) {
+    return { key: 'surplus', icon: '↑', title: 'Surplus melimpah',
+      desc: 'Setoran jauh melampaui kebutuhan. Pertimbangkan menurunkan setoran atau alihkan kelebihan ke modal usaha.' };
+  }
+  if (selisih >= 0) {
+    return { key: 'cukup', icon: '✓', title: 'Setoran ideal',
+      desc: 'Setoran sesuai dengan rata-rata pengeluaran. Pertahankan ritme ini dengan baik.' };
+  }
+  if (selisih >= -setoranM * 0.2) {
+    return { key: 'warning', icon: '!', title: 'Nyaris defisit',
+      desc: 'Setoran hampir tidak menutupi pengeluaran. Mulai siapkan kenaikan setoran.' };
+  }
+  return { key: 'defisit', icon: '↓', title: 'Defisit terdeteksi',
+    desc: 'Pengeluaran melebihi setoran. Naikkan setoran atau cari penghematan perawatan.' };
+}
+
+function saranIdeal() {
+  const m = mingguBerjalan();
+  if (m < 4 || activeData().pengeluaran.length === 0) return null;
+  return Math.ceil((pengeluaranAvgPerMinggu() * 1.1) / 1000) * 1000;
+}
+
+function groupByMonth() {
+  const months = {};
+  for (const s of activeData().setoran) {
+    const k = s.tanggal.slice(0, 7);
+    if (!months[k]) months[k] = { setoran: 0, pengeluaran: 0 };
+    months[k].setoran += Number(s.jumlah) || 0;
+  }
+  for (const p of activeData().pengeluaran) {
+    const k = p.tanggal.slice(0, 7);
+    if (!months[k]) months[k] = { setoran: 0, pengeluaran: 0 };
+    months[k].pengeluaran += Number(p.biaya) || 0;
+  }
+  return months;
+}
+
+// ============================================================
+// REMINDER & BACKUP ALERTS
+// ============================================================
+function shouldShowReminder() {
+  if (!state.reminder.aktif) return false;
+  const today = new Date();
+  const setoran = activeData().setoran;
+  if (setoran.length === 0) return today.getDay() === state.reminder.hari;
+  const last = setoran.map(s => new Date(s.tanggal)).sort((a, b) => b - a)[0];
+  const daysSince = Math.floor((today - last) / 86400000);
+  return daysSince >= 7 || (daysSince >= 5 && today.getDay() === state.reminder.hari);
+}
+
+function renderReminder() {
+  const banner = document.getElementById('reminder-banner');
+  if (!shouldShowReminder()) { banner.innerHTML = ''; return; }
+  const setoran = activeData().setoran;
+  let desc;
+  if (setoran.length === 0) {
+    desc = 'Belum ada setoran sama sekali. Yuk mulai catat setoran pertama.';
+  } else {
+    const last = setoran.map(s => new Date(s.tanggal)).sort((a,b) => b-a)[0];
+    const days = Math.floor((new Date() - last) / 86400000);
+    desc = `Setoran terakhir ${days} hari yang lalu. Saatnya setor lagi.`;
+  }
+  banner.innerHTML = `
+    <div class="alert">
+      <div class="alert-icon">🔔</div>
+      <div class="alert-content">
+        <div class="alert-title">Waktunya menyetor</div>
+        <div class="alert-desc">${desc}</div>
+      </div>
+      <button class="btn btn-gold" onclick="openSetoranModal()">Setor Sekarang</button>
+    </div>
+  `;
+}
+
+function shouldShowBackupAlert() {
+  if (!state.backupSettings.backupReminder) return false;
+  if (!state.backupSettings.lastBackup) {
+    const setoran = activeData().setoran.length + activeData().pengeluaran.length;
+    return setoran >= 5;
+  }
+  const last = new Date(state.backupSettings.lastBackup);
+  const days = Math.floor((new Date() - last) / 86400000);
+  return days >= 7;
+}
+
+function renderBackupAlert() {
+  const banner = document.getElementById('backup-alert');
+  if (!shouldShowBackupAlert()) { banner.innerHTML = ''; return; }
+  let desc;
+  if (!state.backupSettings.lastBackup) {
+    desc = 'Kamu belum pernah backup data. Yuk amankan sekarang!';
+  } else {
+    const days = Math.floor((new Date() - new Date(state.backupSettings.lastBackup)) / 86400000);
+    desc = `Sudah ${days} hari sejak backup terakhir. Backup yuk!`;
+  }
+  banner.innerHTML = `
+    <div class="alert warning">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-content">
+        <div class="alert-title">Saatnya backup</div>
+        <div class="alert-desc">${desc}</div>
+      </div>
+      <button class="btn btn-gold" onclick="exportData()">Backup Sekarang</button>
+    </div>
+  `;
+}
+
+// Check auto-backup setiap load
+function checkAutoBackup() {
+  if (!state.backupSettings.autoBackup) return;
+  const today = new Date();
+  const lastBackup = state.backupSettings.lastBackup ? new Date(state.backupSettings.lastBackup) : null;
+  if (!lastBackup || (today - lastBackup) >= 7 * 86400000) {
+    // Auto-backup
+    setTimeout(() => {
+      if (confirm('Saatnya auto-backup mingguan. Download backup sekarang?')) {
+        exportData();
+      }
+    }, 2000);
+  }
+}
+
+// ============================================================
+// PIN HANDLERS
+// ============================================================
+function togglePinLock() {
+  if (pinSettings.enabled) {
+    if (!confirm('Yakin matikan PIN Lock? Data tidak akan terkunci lagi.')) return;
+    pinSettings.enabled = false;
+    localStorage.removeItem(PIN_KEY);
+    savePinSettings();
+    document.getElementById('toggle-pin').classList.remove('on');
+    showToast('PIN Lock dimatikan');
+  } else {
+    openPinModal();
+  }
+}
+
+function openPinModal() {
+  document.getElementById('modal-pin-title').textContent = pinSettings.enabled ? 'Ganti PIN' : 'Buat PIN Baru';
+  document.getElementById('pin-old-group').style.display = pinSettings.enabled ? 'flex' : 'none';
+  document.getElementById('pin-old').value = '';
+  document.getElementById('pin-new').value = '';
+  document.getElementById('pin-confirm').value = '';
+  document.getElementById('pin-msg').textContent = '';
+  document.getElementById('modal-pin').classList.add('show');
+}
+
+async function savePinChange() {
+  const oldPin = document.getElementById('pin-old').value;
+  const newPin = document.getElementById('pin-new').value;
+  const confirmPin = document.getElementById('pin-confirm').value;
+  const msgEl = document.getElementById('pin-msg');
+
+  if (pinSettings.enabled) {
+    const stored = localStorage.getItem(PIN_KEY);
+    const hashed = await hashPin(oldPin);
+    if (hashed !== stored) {
+      msgEl.style.color = 'var(--terracotta)';
+      msgEl.textContent = 'PIN lama salah';
+      return;
+    }
+  }
+
+  if (newPin.length < 4) {
+    msgEl.style.color = 'var(--terracotta)';
+    msgEl.textContent = 'PIN minimal 4 digit';
+    return;
+  }
+
+  if (newPin !== confirmPin) {
+    msgEl.style.color = 'var(--terracotta)';
+    msgEl.textContent = 'Konfirmasi PIN tidak cocok';
+    return;
+  }
+
+  const hashed = await hashPin(newPin);
+  localStorage.setItem(PIN_KEY, hashed);
+  pinSettings.enabled = true;
+  savePinSettings();
+  document.getElementById('toggle-pin').classList.add('on');
+  closeModal('modal-pin');
+  showToast('PIN berhasil disimpan');
+}
+
+function saveAutolock() {
+  pinSettings.autolockMinutes = Number(document.getElementById('set-autolock').value);
+  savePinSettings();
+  resetAutolockTimer();
+}
+
+// ============================================================
+// BACKUP TOGGLES
+// ============================================================
+function toggleAutoBackup() {
+  state.backupSettings.autoBackup = !state.backupSettings.autoBackup;
+  document.getElementById('toggle-autobackup').classList.toggle('on', state.backupSettings.autoBackup);
+  saveState();
+}
+
+function toggleBackupReminder() {
+  state.backupSettings.backupReminder = !state.backupSettings.backupReminder;
+  document.getElementById('toggle-backup-reminder').classList.toggle('on', state.backupSettings.backupReminder);
+  saveState();
+}
+
+// ============================================================
+// RENDER: DASHBOARD
+// ============================================================
+function renderDashboard() {
+  const d = activeData();
+  const s = saldo();
+
+  const hour = new Date().getHours();
+  let greeting = 'Mari kita lihat kondisi dana hari ini';
+  if (hour < 11) greeting = 'Selamat pagi, mari mulai hari dengan rapi';
+  else if (hour < 15) greeting = 'Selamat siang, cek kondisi keuangan';
+  else if (hour < 19) greeting = 'Selamat sore, evaluasi hari ini';
+  else greeting = 'Selamat malam, waktu untuk merefleksi';
+  document.getElementById('page-greeting').textContent = greeting;
+
+  // Print meta
+  const t = activeTruk();
+  document.getElementById('print-meta-dashboard').textContent =
+    `${t.emoji} ${t.nama} · ${t.plat || '-'} · Dicetak ${new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })}`;
+
+  renderReminder();
+  renderBackupAlert();
+
+  const heroEl = document.getElementById('hero-saldo');
+  heroEl.innerHTML = formatRpHero(s);
+  heroEl.className = 'hero-value' + (s < 0 ? ' negative' : '');
+  document.getElementById('hero-setoran').textContent = formatRp(totalSetoran());
+  document.getElementById('hero-pengeluaran').textContent = formatRp(totalPengeluaran());
+  document.getElementById('hero-minggu').textContent = mingguBerjalan();
+
+  const st = getStatus();
+  document.getElementById('status-banner').innerHTML = `
+    <div class="status ${st.key}">
+      <div class="status-ornament">${st.icon}</div>
+      <div>
+        <div class="status-title">${st.title}</div>
+        <div class="status-desc">${st.desc}</div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('stat-setoran').textContent = formatRp(d.settings.setoranMingguan);
+  document.getElementById('stat-avg').textContent = formatRp(pengeluaranAvgPerMinggu());
+  const selisih = d.settings.setoranMingguan - pengeluaranAvgPerMinggu();
+  const selisihEl = document.getElementById('stat-selisih');
+  selisihEl.textContent = formatRp(selisih);
+  selisihEl.style.color = selisih < 0 ? '#a14040' : (selisih > 0 ? 'var(--sage)' : 'var(--ink)');
+  document.getElementById('stat-selisih-sub').textContent = selisih >= 0 ? 'Surplus mingguan' : 'Defisit mingguan';
+  const saran = saranIdeal();
+  document.getElementById('stat-saran').textContent = saran ? formatRp(saran) : '—';
+
+  renderAlokasi();
+  renderChartTrend();
+  renderChartKategori();
+}
+
+function renderAlokasi() {
+  const totSet = totalSetoran();
+  const d = activeData();
+  const items = [
+    { key: 'rutin', name: 'Perawatan Rutin', pct: d.settings.alokRutin, color: '#7a8b95' },
+    { key: 'darurat', name: 'Dana Darurat', pct: d.settings.alokDarurat, color: '#b8826b' },
+    { key: 'peremajaan', name: 'Peremajaan', pct: d.settings.alokPeremajaan, color: '#8a9a7f' }
+  ];
+
+  document.getElementById('alokasi-list').innerHTML = items.map(it => {
+    const alok = totSet * it.pct / 100;
+    const pakai = totalPengeluaranByKat(it.key);
+    const sisa = alok - pakai;
+    const pctPakai = alok > 0 ? Math.min(100, (pakai / alok) * 100) : 0;
+    return `
+      <div class="alokasi-item">
+        <div class="alokasi-header">
+          <div class="alokasi-name">${it.name}<span class="alokasi-pct">${it.pct}%</span></div>
+          <div class="alokasi-amount">${formatRp(sisa)}</div>
+        </div>
+        <div class="alokasi-bar">
+          <div class="alokasi-fill" style="width: ${pctPakai}%; background: linear-gradient(90deg, ${it.color}aa, ${it.color});"></div>
+        </div>
+        <div class="alokasi-detail">
+          <span>Terpakai · ${formatRp(pakai)}</span>
+          <span>Total · ${formatRp(alok)}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderChartTrend() {
+  const ctx = document.getElementById('chart-trend');
+  if (!ctx) return;
+  const months = groupByMonth();
+  const sortedKeys = Object.keys(months).sort();
+  const last6 = sortedKeys.slice(-6);
+  const labels = last6.map(k => {
+    const [y, m] = k.split('-');
+    return new Date(y, parseInt(m)-1, 1).toLocaleDateString('id-ID', { month: 'short' });
+  });
+  const dataSet = last6.map(k => months[k].setoran);
+  const dataPeng = last6.map(k => months[k].pengeluaran);
+
+  if (chartTrend) chartTrend.destroy();
+  chartTrend = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Setoran', data: dataSet, borderColor: '#8a9a7f', backgroundColor: 'rgba(138, 154, 127, 0.1)', tension: 0.4, fill: true, pointBackgroundColor: '#8a9a7f', pointBorderColor: '#fbf9f4', pointBorderWidth: 2, pointRadius: 5, borderWidth: 2 },
+        { label: 'Pengeluaran', data: dataPeng, borderColor: '#b8826b', backgroundColor: 'rgba(184, 130, 107, 0.1)', tension: 0.4, fill: true, pointBackgroundColor: '#b8826b', pointBorderColor: '#fbf9f4', pointBorderWidth: 2, pointRadius: 5, borderWidth: 2 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 10, padding: 18, font: { size: 11, family: 'Inter' }, color: '#6d6354' } },
+        tooltip: { backgroundColor: '#1c1814', padding: 14, borderColor: '#b8956a', borderWidth: 1, callbacks: { label: (ctx) => ctx.dataset.label + ': ' + formatRp(ctx.parsed.y) } }
+      },
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: (v) => formatRpCompact(v), color: '#9c9080', font: { size: 10, family: 'JetBrains Mono' } }, grid: { color: '#e0d8c7', drawBorder: false } },
+        x: { ticks: { color: '#9c9080', font: { size: 10, family: 'JetBrains Mono' } }, grid: { display: false } }
+      }
+    }
+  });
+}
+
+function renderChartKategori() {
+  const ctx = document.getElementById('chart-kategori');
+  if (!ctx) return;
+  const r = totalPengeluaranByKat('rutin');
+  const d = totalPengeluaranByKat('darurat');
+  const p = totalPengeluaranByKat('peremajaan');
+  const total = r + d + p;
+  if (chartKategori) chartKategori.destroy();
+
+  if (total === 0) {
+    chartKategori = new Chart(ctx, {
+      type: 'doughnut',
+      data: { labels: ['Belum ada data'], datasets: [{ data: [1], backgroundColor: ['#e0d8c7'], borderWidth: 0 }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { enabled: false } }, cutout: '70%' }
+    });
+    return;
+  }
+
+  chartKategori = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Perawatan Rutin', 'Dana Darurat', 'Peremajaan'],
+      datasets: [{ data: [r, d, p], backgroundColor: ['#7a8b95', '#b8826b', '#8a9a7f'], borderWidth: 4, borderColor: '#fbf9f4' }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 10, padding: 16, font: { size: 11, family: 'Inter' }, color: '#6d6354' } },
+        tooltip: { backgroundColor: '#1c1814', padding: 14, borderColor: '#b8956a', borderWidth: 1, callbacks: { label: (ctx) => ctx.label + ': ' + formatRp(ctx.parsed) } }
+      },
+      cutout: '65%'
+    }
+  });
+}
+
+// ============================================================
+// RENDER: SETORAN
+// ============================================================
+function renderSetoran() {
+  const d = activeData();
+  const sorted = [...d.setoran].sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+  document.getElementById('setoran-summary').textContent = `${d.setoran.length} setoran tercatat · Total ${formatRp(totalSetoran())}`;
+
+  const t = activeTruk();
+  document.getElementById('print-meta-setoran').textContent =
+    `${t.emoji} ${t.nama} · ${t.plat || '-'} · ${d.setoran.length} setoran · Total ${formatRp(totalSetoran())} · Dicetak ${new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })}`;
+
+  const tbody = document.getElementById('setoran-tbody');
+  if (sorted.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><div class="empty-ornament">∅</div><div class="empty-text">Belum ada setoran tercatat</div></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = sorted.map(s => `
+    <tr>
+      <td>${formatTanggal(s.tanggal)}</td>
+      <td class="num text-dim">${s.minggu || '—'}</td>
+      <td class="num serif" style="font-weight: 500; font-size: 17px;">${formatRp(s.jumlah)}</td>
+      <td class="text-dim">${s.catatan || '—'}</td>
+      <td>
+        <div class="row-actions">
+          <button class="btn btn-secondary btn-sm" onclick="editSetoran('${s.id}')">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteSetoran('${s.id}')">×</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ============================================================
+// RENDER: PENGELUARAN
+// ============================================================
+function renderPengeluaran() {
+  const d = activeData();
+  document.getElementById('sub-rutin').textContent = formatRp(totalPengeluaranByKat('rutin'));
+  document.getElementById('sub-darurat').textContent = formatRp(totalPengeluaranByKat('darurat'));
+  document.getElementById('sub-peremajaan').textContent = formatRp(totalPengeluaranByKat('peremajaan'));
+
+  const sorted = [...d.pengeluaran].sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+  document.getElementById('pengeluaran-summary').textContent = `${d.pengeluaran.length} pengeluaran tercatat · Total ${formatRp(totalPengeluaran())}`;
+
+  const t = activeTruk();
+  document.getElementById('print-meta-pengeluaran').textContent =
+    `${t.emoji} ${t.nama} · ${t.plat || '-'} · ${d.pengeluaran.length} pengeluaran · Total ${formatRp(totalPengeluaran())} · Dicetak ${new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })}`;
+
+  const tbody = document.getElementById('pengeluaran-tbody');
+  if (sorted.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-ornament">∅</div><div class="empty-text">Belum ada pengeluaran tercatat</div></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = sorted.map(p => `
+    <tr>
+      <td>${formatTanggal(p.tanggal)}</td>
+      <td class="num text-dim">${p.km ? p.km.toLocaleString('id-ID') : '—'}</td>
+      <td>${p.jenis}</td>
+      <td><span class="badge ${KATEGORI_BADGE[p.kategori]}">${KATEGORI_LABEL[p.kategori]}</span></td>
+      <td class="num right serif" style="font-weight: 500; font-size: 17px;">${formatRp(p.biaya)}</td>
+      <td class="text-dim">${p.bengkel || '—'}</td>
+      <td>${p.foto ? `<img src="${p.foto}" class="photo-thumb" onclick="openLightbox('${p.foto}')">` : '<span class="text-mute">—</span>'}</td>
+      <td>
+        <div class="row-actions">
+          <button class="btn btn-secondary btn-sm" onclick="editPengeluaran('${p.id}')">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deletePengeluaran('${p.id}')">×</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ============================================================
+// RENDER: REKAP
+// ============================================================
+function renderRekap() {
+  const months = groupByMonth();
+  const sortedKeys = Object.keys(months).sort();
+  const tbody = document.getElementById('rekap-tbody');
+
+  const t = activeTruk();
+  document.getElementById('print-meta-rekap').textContent =
+    `${t.emoji} ${t.nama} · ${t.plat || '-'} · ${sortedKeys.length} bulan data · Dicetak ${new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })}`;
+
+  if (sortedKeys.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-ornament">∅</div><div class="empty-text">Belum ada data untuk direkap</div></div></td></tr>`;
+    renderChartAkumulatif([], []);
+    return;
+  }
+
+  let saldoAkum = 0;
+  const akumData = [];
+  const akumLabels = [];
+
+  const rows = sortedKeys.map(k => {
+    const m = months[k];
+    const sel = m.setoran - m.pengeluaran;
+    saldoAkum += sel;
+    const [y, mo] = k.split('-');
+    const nama = new Date(y, parseInt(mo)-1, 1).toLocaleDateString('id-ID', { month: 'short', year: 'numeric' });
+    const status = m.setoran === 0 && m.pengeluaran === 0 ? 'Kosong' : (sel >= 0 ? 'Surplus' : 'Defisit');
+    const badge = sel >= 0 ? (m.setoran === 0 && m.pengeluaran === 0 ? 'badge-kosong' : 'badge-surplus') : 'badge-defisit';
+    akumLabels.push(nama);
+    akumData.push(saldoAkum);
+    return `
+      <tr>
+        <td class="serif" style="font-weight: 500; font-size: 16px;">${nama}</td>
+        <td class="num right">${formatRp(m.setoran)}</td>
+        <td class="num right">${formatRp(m.pengeluaran)}</td>
+        <td class="num right serif" style="font-weight: 500; font-size: 16px; color: ${sel < 0 ? '#a14040' : '#5a7d5e'};">${formatRp(sel)}</td>
+        <td class="num right serif" style="font-weight: 500; font-size: 16px;">${formatRp(saldoAkum)}</td>
+        <td><span class="badge ${badge}">${status}</span></td>
+      </tr>
+    `;
+  }).join('');
+
+  const totSet = sortedKeys.reduce((s, k) => s + months[k].setoran, 0);
+  const totPeng = sortedKeys.reduce((s, k) => s + months[k].pengeluaran, 0);
+
+  tbody.innerHTML = rows + `
+    <tr style="background: var(--bg-warm);">
+      <td class="serif" style="font-weight: 600; font-size: 18px;">TOTAL</td>
+      <td class="num right serif" style="font-weight: 600; font-size: 17px;">${formatRp(totSet)}</td>
+      <td class="num right serif" style="font-weight: 600; font-size: 17px;">${formatRp(totPeng)}</td>
+      <td class="num right serif" style="font-weight: 600; font-size: 17px; color: ${totSet-totPeng < 0 ? '#a14040' : '#5a7d5e'};">${formatRp(totSet-totPeng)}</td>
+      <td class="num right serif" style="font-weight: 600; font-size: 17px;">${formatRp(saldoAkum)}</td>
+      <td>—</td>
+    </tr>
+  `;
+  renderChartAkumulatif(akumLabels, akumData);
+}
+
+function renderChartAkumulatif(labels, data) {
+  const ctx = document.getElementById('chart-akumulatif');
+  if (!ctx) return;
+  if (chartAkumulatif) chartAkumulatif.destroy();
+  if (labels.length === 0) {
+    chartAkumulatif = new Chart(ctx, { type: 'line', data: { labels: [], datasets: [] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } } });
+    return;
+  }
+  const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 280);
+  gradient.addColorStop(0, 'rgba(184, 149, 106, 0.25)');
+  gradient.addColorStop(1, 'rgba(184, 149, 106, 0)');
+  chartAkumulatif = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{ label: 'Saldo Akumulatif', data, borderColor: '#b8956a', backgroundColor: gradient, tension: 0.4, fill: true, pointBackgroundColor: '#b8956a', pointBorderColor: '#fbf9f4', pointBorderWidth: 3, pointRadius: 6, borderWidth: 2.5 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1c1814', padding: 14, borderColor: '#b8956a', borderWidth: 1, callbacks: { label: (ctx) => 'Saldo: ' + formatRp(ctx.parsed.y) } } },
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: (v) => formatRpCompact(v), color: '#9c9080', font: { size: 10, family: 'JetBrains Mono' } }, grid: { color: '#e0d8c7', drawBorder: false } },
+        x: { ticks: { color: '#9c9080', font: { size: 10, family: 'JetBrains Mono' } }, grid: { display: false } }
+      }
+    }
+  });
+}
+
+// ============================================================
+// PRINT
+// ============================================================
+function printView(viewName) {
+  // Pastikan view aktif sudah benar
+  switchView(viewName);
+
+  // Tambah class print-active ke view yang aktif
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('print-active'));
+  document.getElementById('view-' + viewName).classList.add('print-active');
+
+  // Tunggu chart re-render
+  setTimeout(() => {
+    window.print();
+  }, 500);
+}
+
+window.addEventListener('afterprint', () => {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('print-active'));
+});
+
+// ============================================================
+// TRUK
+// ============================================================
+function renderTrukList() {
+  const list = document.getElementById('truk-list');
+  list.innerHTML = state.trukList.map(t => {
+    const d = state.data[t.id] || { setoran: [], pengeluaran: [] };
+    const isActive = t.id === state.activeTrukId;
+    return `
+      <div class="truk-card ${isActive ? 'active' : ''}" onclick="setActiveTruk('${t.id}')">
+        ${isActive ? '<div class="truk-card-active-badge"></div>' : ''}
+        <div class="truk-card-actions">
+          <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); editTruk('${t.id}')">Edit</button>
+          ${state.trukList.length > 1 ? `<button class="btn btn-danger btn-sm" onclick="event.stopPropagation(); deleteTruk('${t.id}')">×</button>` : ''}
+        </div>
+        <div class="truk-card-emoji">${t.emoji}</div>
+        <div class="truk-card-name">${t.nama}</div>
+        <div class="truk-card-plat">${t.plat || '—'} · ${t.tipe || '—'}</div>
+        <div class="truk-card-stats">
+          <span>↓ ${d.setoran.length} SETOR</span>
+          <span>↑ ${d.pengeluaran.length} BIAYA</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderTrukSelector() {
+  const t = activeTruk();
+  if (!t) return;
+  document.getElementById('active-truk-emoji').textContent = t.emoji;
+  document.getElementById('active-truk-name').innerHTML = `${t.nama} <span class="plat-text text-dim" style="font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px;">· ${t.plat}</span>`;
+  renderTrukDropdownMenu();
+}
+
+function renderTrukDropdownMenu() {
+  const menu = document.getElementById('truk-dropdown-menu');
+  menu.innerHTML = state.trukList.map(t => `
+    <div class="truk-option ${t.id === state.activeTrukId ? 'active' : ''}" onclick="setActiveTruk('${t.id}'); toggleTrukDropdown();">
+      <div class="truk-emoji">${t.emoji}</div>
+      <div>
+        <div class="serif" style="font-weight: 500; font-size: 15px;">${t.nama}</div>
+        <div class="text-dim" style="font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px;">${t.plat || '—'}</div>
+      </div>
+    </div>
+  `).join('') + `
+    <div class="truk-option-divider"></div>
+    <div class="truk-option" onclick="switchView('truk'); toggleTrukDropdown();">
+      <div style="width: 28px; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--gold);">+</div>
+      <div class="serif" style="font-weight: 500; font-size: 15px;">Kelola armada</div>
+    </div>
+  `;
+}
+
+function toggleTrukDropdown() {
+  document.getElementById('truk-dropdown').classList.toggle('open');
+}
+
+document.addEventListener('click', (e) => {
+  const dd = document.getElementById('truk-dropdown');
+  if (!dd.contains(e.target)) dd.classList.remove('open');
+});
+
+function setActiveTruk(id) {
+  state.activeTrukId = id;
+  saveState();
+  renderTrukSelector();
+  const activeView = document.querySelector('.view.active');
+  if (activeView) switchView(activeView.id.replace('view-', ''));
+}
+
+function openTrukModal(id = null) {
+  document.getElementById('modal-truk-title').textContent = id ? 'Edit Armada' : 'Tambah Armada';
+  if (id) {
+    const t = state.trukList.find(x => x.id === id);
+    document.getElementById('truk-id').value = id;
+    document.getElementById('truk-emoji').value = t.emoji;
+    document.getElementById('truk-nama').value = t.nama;
+    document.getElementById('truk-plat').value = t.plat || '';
+    document.getElementById('truk-tipe').value = t.tipe || '';
+  } else {
+    document.getElementById('truk-id').value = '';
+    document.getElementById('truk-emoji').value = '🚚';
+    document.getElementById('truk-nama').value = '';
+    document.getElementById('truk-plat').value = '';
+    document.getElementById('truk-tipe').value = '';
+  }
+  document.getElementById('modal-truk').classList.add('show');
+}
+
+function editTruk(id) { openTrukModal(id); }
+
+function saveTruk() {
+  const id = document.getElementById('truk-id').value;
+  const data = {
+    emoji: document.getElementById('truk-emoji').value,
+    nama: document.getElementById('truk-nama').value.trim(),
+    plat: document.getElementById('truk-plat').value.trim(),
+    tipe: document.getElementById('truk-tipe').value.trim()
+  };
+  if (!data.nama) { showToast('Nama wajib diisi'); return; }
+  if (id) {
+    const idx = state.trukList.findIndex(t => t.id === id);
+    state.trukList[idx] = { ...state.trukList[idx], ...data };
+  } else {
+    const newId = uid();
+    state.trukList.push({ id: newId, ...data });
+    state.data[newId] = { settings: { ...DEFAULT_SETTINGS }, setoran: [], pengeluaran: [] };
+  }
+  saveState();
+  closeModal('modal-truk');
+  showToast('Tersimpan');
+  renderTrukSelector();
+  renderTrukList();
+}
+
+function deleteTruk(id) {
+  if (state.trukList.length <= 1) { showToast('Minimal 1 armada'); return; }
+  if (!confirm('Hapus armada ini? Semua data terkait akan hilang.')) return;
+  state.trukList = state.trukList.filter(t => t.id !== id);
+  delete state.data[id];
+  if (state.activeTrukId === id) state.activeTrukId = state.trukList[0].id;
+  saveState();
+  renderTrukSelector();
+  renderTrukList();
+  showToast('Dihapus');
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function renderSettings() {
+  const d = activeData();
+  document.getElementById('set-setoran').value = d.settings.setoranMingguan;
+  document.getElementById('set-alok-rutin').value = d.settings.alokRutin;
+  document.getElementById('set-alok-darurat').value = d.settings.alokDarurat;
+  document.getElementById('set-alok-peremajaan').value = d.settings.alokPeremajaan;
+  document.getElementById('alok-warning').textContent = '';
+  document.getElementById('toggle-reminder').classList.toggle('on', state.reminder.aktif);
+  document.getElementById('set-reminder-hari').value = state.reminder.hari;
+
+  // PIN & Backup
+  document.getElementById('toggle-pin').classList.toggle('on', pinSettings.enabled);
+  document.getElementById('set-autolock').value = pinSettings.autolockMinutes;
+  document.getElementById('toggle-autobackup').classList.toggle('on', state.backupSettings.autoBackup);
+  document.getElementById('toggle-backup-reminder').classList.toggle('on', state.backupSettings.backupReminder);
+
+  // Last backup info
+  const last = state.backupSettings.lastBackup;
+  document.getElementById('last-backup-info').textContent = last
+    ? `${new Date(last).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}`
+    : 'Belum pernah backup';
+
+  // Sync UI
+  const isConnected = syncState.token && syncState.gistId;
+  document.getElementById('sync-not-setup').style.display = isConnected ? 'none' : 'block';
+  document.getElementById('sync-active').style.display = isConnected ? 'block' : 'none';
+  document.getElementById('sync-status-badge').className = 'badge ' + (isConnected ? 'badge-surplus' : 'badge-kosong');
+  document.getElementById('sync-status-badge').textContent = isConnected ? '✓ AKTIF' : 'BELUM AKTIF';
+
+  if (isConnected) {
+    document.getElementById('toggle-autosync').classList.toggle('on', syncState.autoSync);
+    const lastSync = syncState.lastSync;
+    document.getElementById('last-sync-info').textContent = lastSync
+      ? new Date(lastSync).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+      : 'Belum pernah sync';
+  }
+}
+
+function saveSettings() {
+  const r = Number(document.getElementById('set-alok-rutin').value);
+  const d = Number(document.getElementById('set-alok-darurat').value);
+  const p = Number(document.getElementById('set-alok-peremajaan').value);
+  if (r + d + p !== 100) {
+    document.getElementById('alok-warning').textContent = `Total harus 100% (sekarang ${r+d+p}%)`;
+    return;
+  }
+  activeData().settings = {
+    setoranMingguan: Number(document.getElementById('set-setoran').value),
+    alokRutin: r, alokDarurat: d, alokPeremajaan: p
+  };
+  saveState();
+  showToast('Tersimpan');
+}
+
+function toggleReminder() {
+  state.reminder.aktif = !state.reminder.aktif;
+  document.getElementById('toggle-reminder').classList.toggle('on', state.reminder.aktif);
+  saveState();
+}
+
+function saveReminderHari() {
+  state.reminder.hari = Number(document.getElementById('set-reminder-hari').value);
+  saveState();
+}
+
+// ============================================================
+// MODAL HANDLERS
+// ============================================================
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+  if (id === 'modal-pengeluaran') {
+    pendingPhoto = null;
+    resetPhotoArea();
+  }
+}
+
+function openSetoranModal(id = null) {
+  const t = activeTruk();
+  document.getElementById('modal-setoran-truk').textContent = `${t.emoji}  ${t.nama}`;
+  document.getElementById('modal-setoran-title').textContent = id ? 'Edit Setoran' : 'Catat Setoran';
+  const d = activeData();
+  if (id) {
+    const s = d.setoran.find(x => x.id === id);
+    document.getElementById('setoran-id').value = id;
+    document.getElementById('setoran-tanggal').value = s.tanggal;
+    document.getElementById('setoran-minggu').value = s.minggu || '';
+    document.getElementById('setoran-jumlah').value = s.jumlah;
+    document.getElementById('setoran-catatan').value = s.catatan || '';
+  } else {
+    document.getElementById('setoran-id').value = '';
+    document.getElementById('setoran-tanggal').value = todayStr();
+    document.getElementById('setoran-minggu').value = d.setoran.length + 1;
+    document.getElementById('setoran-jumlah').value = d.settings.setoranMingguan;
+    document.getElementById('setoran-catatan').value = '';
+  }
+  document.getElementById('modal-setoran').classList.add('show');
+}
+
+function saveSetoran() {
+  const id = document.getElementById('setoran-id').value;
+  const data = {
+    tanggal: document.getElementById('setoran-tanggal').value,
+    minggu: Number(document.getElementById('setoran-minggu').value) || null,
+    jumlah: Number(document.getElementById('setoran-jumlah').value),
+    catatan: document.getElementById('setoran-catatan').value
+  };
+  if (!data.tanggal || !data.jumlah || data.jumlah <= 0) { showToast('Tanggal & jumlah wajib'); return; }
+  const d = activeData();
+  if (id) {
+    const idx = d.setoran.findIndex(x => x.id === id);
+    d.setoran[idx] = { ...d.setoran[idx], ...data };
+  } else {
+    d.setoran.push({ id: uid(), ...data });
+  }
+  saveState();
+  closeModal('modal-setoran');
+  showToast('Tersimpan');
+  renderSetoran();
+}
+
+function editSetoran(id) { openSetoranModal(id); }
+
+function deleteSetoran(id) {
+  if (!confirm('Hapus setoran ini?')) return;
+  activeData().setoran = activeData().setoran.filter(x => x.id !== id);
+  saveState();
+  renderSetoran();
+  showToast('Dihapus');
+}
+
+function openPengeluaranModal(id = null) {
+  const t = activeTruk();
+  document.getElementById('modal-pengeluaran-truk').textContent = `${t.emoji}  ${t.nama}`;
+  document.getElementById('modal-pengeluaran-title').textContent = id ? 'Edit Pengeluaran' : 'Catat Pengeluaran';
+  pendingPhoto = null;
+  resetPhotoArea();
+  const d = activeData();
+  if (id) {
+    const p = d.pengeluaran.find(x => x.id === id);
+    document.getElementById('pengeluaran-id').value = id;
+    document.getElementById('pengeluaran-tanggal').value = p.tanggal;
+    document.getElementById('pengeluaran-km').value = p.km || '';
+    document.getElementById('pengeluaran-jenis').value = p.jenis;
+    document.getElementById('pengeluaran-kategori').value = p.kategori;
+    document.getElementById('pengeluaran-biaya').value = p.biaya;
+    document.getElementById('pengeluaran-bengkel').value = p.bengkel || '';
+    document.getElementById('pengeluaran-catatan').value = p.catatan || '';
+    if (p.foto) { pendingPhoto = p.foto; showPhotoPreview(p.foto); }
+  } else {
+    document.getElementById('pengeluaran-id').value = '';
+    document.getElementById('pengeluaran-tanggal').value = todayStr();
+    document.getElementById('pengeluaran-km').value = '';
+    document.getElementById('pengeluaran-jenis').value = '';
+    document.getElementById('pengeluaran-kategori').value = 'rutin';
+    document.getElementById('pengeluaran-biaya').value = '';
+    document.getElementById('pengeluaran-bengkel').value = '';
+    document.getElementById('pengeluaran-catatan').value = '';
+  }
+  document.getElementById('modal-pengeluaran').classList.add('show');
+}
+
+function handlePhotoUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const MAX = 1200;
+      let { width, height } = img;
+      if (width > MAX || height > MAX) {
+        if (width > height) { height = (height * MAX) / width; width = MAX; }
+        else { width = (width * MAX) / height; height = MAX; }
+      }
+      canvas.width = width; canvas.height = height;
+      canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
+      pendingPhoto = dataUrl;
+      showPhotoPreview(dataUrl);
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function showPhotoPreview(url) {
+  document.getElementById('photo-area').innerHTML = `
+    <div class="photo-preview">
+      <img src="${url}" alt="Foto struk">
+      <button type="button" class="photo-remove" onclick="removePhoto()">×</button>
+    </div>
+  `;
+}
+
+function removePhoto() {
+  pendingPhoto = null;
+  resetPhotoArea();
+  document.getElementById('pengeluaran-foto-input').value = '';
+}
+
+function resetPhotoArea() {
+  document.getElementById('photo-area').innerHTML = `
+    <div class="photo-upload" onclick="document.getElementById('pengeluaran-foto-input').click()">
+      <div class="photo-upload-icon">+</div>
+      <div class="photo-upload-text">Tap untuk pilih foto atau ambil gambar</div>
+    </div>
+  `;
+}
+
+function savePengeluaran() {
+  const id = document.getElementById('pengeluaran-id').value;
+  const data = {
+    tanggal: document.getElementById('pengeluaran-tanggal').value,
+    km: Number(document.getElementById('pengeluaran-km').value) || null,
+    jenis: document.getElementById('pengeluaran-jenis').value.trim(),
+    kategori: document.getElementById('pengeluaran-kategori').value,
+    biaya: Number(document.getElementById('pengeluaran-biaya').value),
+    bengkel: document.getElementById('pengeluaran-bengkel').value,
+    catatan: document.getElementById('pengeluaran-catatan').value,
+    foto: pendingPhoto || null
+  };
+  if (!data.tanggal || !data.jenis || !data.biaya || data.biaya < 0) { showToast('Tanggal, jenis & biaya wajib'); return; }
+  const d = activeData();
+  if (id) {
+    const idx = d.pengeluaran.findIndex(x => x.id === id);
+    d.pengeluaran[idx] = { ...d.pengeluaran[idx], ...data };
+  } else {
+    d.pengeluaran.push({ id: uid(), ...data });
+  }
+  saveState();
+  closeModal('modal-pengeluaran');
+  showToast('Tersimpan');
+  renderPengeluaran();
+}
+
+function editPengeluaran(id) { openPengeluaranModal(id); }
+
+function deletePengeluaran(id) {
+  if (!confirm('Hapus pengeluaran ini?')) return;
+  activeData().pengeluaran = activeData().pengeluaran.filter(x => x.id !== id);
+  saveState();
+  renderPengeluaran();
+  showToast('Dihapus');
+}
+
+// ============================================================
+// LIGHTBOX
+// ============================================================
+function openLightbox(url) {
+  document.getElementById('lightbox-img').src = url;
+  document.getElementById('lightbox').classList.add('show');
+}
+function closeLightbox() { document.getElementById('lightbox').classList.remove('show'); }
+
+// ============================================================
+// EXPORT / IMPORT
+// ============================================================
+function exportData() {
+  const exportObj = { ...state, pinSettings, exportedAt: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(exportObj, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `dana_truk_backup_${todayStr()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+
+  state.backupSettings.lastBackup = new Date().toISOString();
+  saveState();
+  showToast('Backup berhasil di-download');
+
+  // re-render to update alerts
+  const activeView = document.querySelector('.view.active');
+  if (activeView) {
+    const viewName = activeView.id.replace('view-', '');
+    if (viewName === 'dashboard') renderBackupAlert();
+    if (viewName === 'settings') renderSettings();
+  }
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      if (!parsed.trukList || !parsed.data) throw new Error('Format tidak valid');
+      if (!confirm('Yakin restore? Data saat ini akan ditimpa.')) return;
+
+      // Backup PIN settings sebelum overwrite
+      const importedPin = parsed.pinSettings;
+      delete parsed.pinSettings;
+      delete parsed.exportedAt;
+
+      state = parsed;
+      saveState();
+
+      // Restore PIN settings kalau ada
+      if (importedPin) {
+        pinSettings = importedPin;
+        savePinSettings();
+      }
+
+      loadState();
+      renderTrukSelector();
+      switchView('dashboard');
+      showToast('Restore berhasil');
+    } catch { showToast('File tidak valid'); }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function resetData() {
+  if (!confirm('PERINGATAN: Semua data akan dihapus permanen. Lanjutkan?')) return;
+  if (!confirm('Yakin? Tindakan ini tidak bisa dibatalkan.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(PIN_KEY);
+  localStorage.removeItem(PIN_SETTINGS_KEY);
+  location.reload();
+}
+
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', (e) => { if (e.target === o) o.classList.remove('show'); });
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.show').forEach(m => m.classList.remove('show'));
+    closeLightbox();
+  }
+});
+
+// ============================================================
+// CLOUD SYNC (GitHub Gist)
+// ============================================================
+function loadSyncState() {
+  try {
+    const raw = localStorage.getItem(SYNC_KEY);
+    if (raw) syncState = { ...syncState, ...JSON.parse(raw) };
+  } catch (e) { console.warn(e); }
+  updateSyncIndicator();
+}
+
+function saveSyncState() {
+  try { localStorage.setItem(SYNC_KEY, JSON.stringify(syncState)); }
+  catch (e) { console.warn(e); }
+}
+
+function updateSyncIndicator() {
+  const dot = document.getElementById('sync-dot');
+  const text = document.getElementById('sync-text');
+  if (!dot) return;
+
+  dot.className = 'sync-dot';
+
+  if (syncState.status === 'syncing') {
+    dot.classList.add('syncing');
+    text.textContent = 'Syncing...';
+  } else if (syncState.status === 'connected' && syncState.token) {
+    dot.classList.add('connected');
+    if (syncState.lastSync) {
+      const minutes = Math.floor((new Date() - new Date(syncState.lastSync)) / 60000);
+      if (minutes < 1) text.textContent = 'Baru sync';
+      else if (minutes < 60) text.textContent = `${minutes}m lalu`;
+      else if (minutes < 1440) text.textContent = `${Math.floor(minutes/60)}j lalu`;
+      else text.textContent = `${Math.floor(minutes/1440)}h lalu`;
+    } else {
+      text.textContent = 'Terhubung';
+    }
+  } else if (syncState.status === 'error') {
+    dot.classList.add('error');
+    text.textContent = 'Error';
+  } else {
+    text.textContent = 'Belum sync';
+  }
+}
+
+async function githubApi(method, path, body) {
+  if (!syncState.token) throw new Error('Token tidak ada');
+  const res = await fetch('https://api.github.com' + path, {
+    method,
+    headers: {
+      'Authorization': 'token ' + syncState.token,
+      'Accept': 'application/vnd.github+json',
+      'Content-Type': 'application/json'
+    },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `HTTP ${res.status}`);
+  }
+  return res.json();
+}
+
+async function findExistingGist() {
+  // Cari gist dengan deskripsi yang sama biar nggak bikin duplikat
+  try {
+    const gists = await githubApi('GET', '/gists?per_page=100');
+    return gists.find(g => g.description === GIST_DESC);
+  } catch {
+    return null;
+  }
+}
+
+async function setupSync() {
+  const token = document.getElementById('github-token').value.trim();
+  const msg = document.getElementById('sync-setup-msg');
+
+  if (!token) {
+    msg.style.color = 'var(--terracotta)';
+    msg.textContent = 'Token wajib diisi';
+    return;
+  }
+
+  if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
+    msg.style.color = 'var(--terracotta)';
+    msg.textContent = 'Format token salah. Mulai dengan ghp_ atau github_pat_';
+    return;
+  }
+
+  msg.style.color = 'var(--ink-3)';
+  msg.textContent = 'Memverifikasi token...';
+  syncState.token = token;
+
+  try {
+    // Verify token dengan ambil user info
+    const user = await githubApi('GET', '/user');
+    msg.textContent = `Halo ${user.login}! Mencari data lama...`;
+
+    // Cari gist lama, atau buat baru
+    let gist = await findExistingGist();
+
+    if (gist) {
+      msg.textContent = `Data lama ditemukan, mengunduh...`;
+      syncState.gistId = gist.id;
+
+      // Ambil isi gist
+      const fullGist = await githubApi('GET', `/gists/${gist.id}`);
+      const fileContent = fullGist.files[GIST_FILE]?.content;
+
+      if (fileContent) {
+        if (confirm('Data tersimpan di cloud ditemukan. Mau download data tersebut sekarang? (Klik OK untuk download, Cancel untuk upload data lokal saat ini)')) {
+          await applyCloudData(fileContent);
+          msg.style.color = 'var(--sage)';
+          msg.textContent = '✓ Data berhasil di-download dari cloud';
+          syncState.status = 'connected';
+          syncState.lastSync = new Date().toISOString();
+          saveSyncState();
+          updateSyncIndicator();
+          showToast('Sync berhasil dipasang');
+          setTimeout(() => location.reload(), 1500);
+          return;
+        }
+      }
+    }
+
+    // Upload data lokal saat ini
+    msg.textContent = 'Mengupload data lokal...';
+    await uploadToCloud();
+    syncState.status = 'connected';
+    saveSyncState();
+
+    msg.style.color = 'var(--sage)';
+    msg.textContent = '✓ Sync berhasil dipasang!';
+    renderSettings();
+    updateSyncIndicator();
+    showToast('Cloud sync aktif');
+  } catch (err) {
+    syncState.token = null;
+    syncState.status = 'error';
+    msg.style.color = 'var(--terracotta)';
+    msg.textContent = 'Gagal: ' + err.message;
+    updateSyncIndicator();
+  }
+}
+
+async function uploadToCloud() {
+  if (!syncState.token) return;
+
+  syncState.status = 'syncing';
+  updateSyncIndicator();
+
+  const data = {
+    state,
+    pinSettings,
+    syncedAt: new Date().toISOString(),
+    device: navigator.userAgent.match(/Mobile|Android|iPhone/i) ? 'mobile' : 'desktop'
+  };
+
+  const fileContent = JSON.stringify(data, null, 2);
+  const body = {
+    description: GIST_DESC,
+    public: false,
+    files: { [GIST_FILE]: { content: fileContent } }
+  };
+
+  try {
+    let result;
+    if (syncState.gistId) {
+      result = await githubApi('PATCH', `/gists/${syncState.gistId}`, body);
+    } else {
+      result = await githubApi('POST', '/gists', body);
+      syncState.gistId = result.id;
+    }
+
+    syncState.lastSync = new Date().toISOString();
+    syncState.status = 'connected';
+    saveSyncState();
+    updateSyncIndicator();
+    return true;
+  } catch (err) {
+    syncState.status = 'error';
+    updateSyncIndicator();
+    throw err;
+  }
+}
+
+async function applyCloudData(jsonContent) {
+  try {
+    const parsed = JSON.parse(jsonContent);
+    if (!parsed.state) throw new Error('Data tidak valid');
+
+    // Simpan PIN settings jika ada
+    if (parsed.pinSettings) {
+      pinSettings = parsed.pinSettings;
+      savePinSettings();
+    }
+
+    state = parsed.state;
+    saveState();
+  } catch (err) {
+    throw new Error('Gagal apply data: ' + err.message);
+  }
+}
+
+async function downloadFromCloud() {
+  if (!syncState.token || !syncState.gistId) {
+    showToast('Belum tersambung');
+    return;
+  }
+  if (!confirm('Yakin download? Data di device ini akan diganti dengan data dari cloud.')) return;
+
+  syncState.status = 'syncing';
+  updateSyncIndicator();
+
+  try {
+    const gist = await githubApi('GET', `/gists/${syncState.gistId}`);
+    const content = gist.files[GIST_FILE]?.content;
+    if (!content) throw new Error('File tidak ditemukan di cloud');
+
+    await applyCloudData(content);
+    syncState.lastSync = new Date().toISOString();
+    syncState.status = 'connected';
+    saveSyncState();
+    showToast('Data berhasil di-download');
+    setTimeout(() => location.reload(), 800);
+  } catch (err) {
+    syncState.status = 'error';
+    updateSyncIndicator();
+    showToast('Download gagal: ' + err.message);
+  }
+}
+
+async function syncNow() {
+  if (!syncState.token) {
+    showToast('Belum tersambung');
+    return;
+  }
+  try {
+    await uploadToCloud();
+    showToast('Upload berhasil');
+    renderSettings();
+  } catch (err) {
+    showToast('Sync gagal: ' + err.message);
+  }
+}
+
+function autoSyncDebounced() {
+  if (!syncState.autoSync || !syncState.token) return;
+  if (syncDebounceTimer) clearTimeout(syncDebounceTimer);
+  syncDebounceTimer = setTimeout(() => {
+    uploadToCloud().catch(err => console.warn('Auto-sync gagal:', err));
+  }, 3000); // delay 3 detik biar nggak spam API
+}
+
+function toggleAutoSync() {
+  syncState.autoSync = !syncState.autoSync;
+  document.getElementById('toggle-autosync').classList.toggle('on', syncState.autoSync);
+  saveSyncState();
+}
+
+function disconnectSync() {
+  if (!confirm('Putuskan koneksi cloud sync? Data di cloud tidak akan dihapus, hanya token di device ini.')) return;
+  syncState = { token: null, gistId: null, autoSync: true, lastSync: null, status: 'disconnected' };
+  localStorage.removeItem(SYNC_KEY);
+  renderSettings();
+  updateSyncIndicator();
+  showToast('Sync dimatikan');
+}
+
+// Hook ke saveState supaya auto-sync trigger setelah save
+const originalSaveState = saveState;
+saveState = function() {
+  originalSaveState();
+  autoSyncDebounced();
+};
+
+// ============================================================
+// INIT
+// ============================================================
+checkLockOnLoad();
+loadState();
+loadSyncState();
+renderTrukSelector();
+renderDashboard();
+checkAutoBackup();
+
+// Update sync indicator setiap 30 detik (untuk "X menit lalu")
+setInterval(updateSyncIndicator, 30000);
+</script>
+
+</body>
+</html>
